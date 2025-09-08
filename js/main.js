@@ -165,7 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const noInventoryMessage = document.getElementById(
         "no-inventory-message"
       );
-      
 
       if (characterData.inventory && characterData.inventory.length > 0) {
         noInventoryMessage.style.display = "none";
@@ -188,5 +187,22 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "character-creation.html";
     }
   }
-  
+  const logoutButton = document.getElementById("logout-button");
+  if (logoutButton) {
+    logoutButton.addEventListener("click", () => {
+      // Preguntamos al usuario para confirmar
+      const confirmLogout = confirm(
+        "¿Estás seguro de que quieres cerrar sesión?"
+      );
+      if (confirmLogout) {
+        // Borramos los datos del usuario y personaje del almacenamiento local
+        localStorage.removeItem("currentUser");
+        localStorage.removeItem("currentCharacter");
+
+        // Avisamos al usuario y lo redirigimos a la página principal
+        alert("¡Has cerrado la sesión! ¡Vuelve pronto, aventurero!");
+        window.location.href = "index.html";
+      }
+    });
+  }
 });
