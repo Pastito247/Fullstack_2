@@ -165,6 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const noInventoryMessage = document.getElementById(
         "no-inventory-message"
       );
+      
 
       if (characterData.inventory && characterData.inventory.length > 0) {
         noInventoryMessage.style.display = "none";
@@ -187,4 +188,5 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "character-creation.html";
     }
   }
+  
 });

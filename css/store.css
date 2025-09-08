@@ -154,6 +154,16 @@
     image-rendering: pixelated;
     min-height: 100vh;
 }
+.shop-bg-market {
+    background-image: url('../assets/images/store-main-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    padding-top: 80px;
+    image-rendering: pixelated;
+    min-height: 100vh;
+}
 
 .store-container {
   padding: 20px;
