@@ -1,0 +1,136 @@
+/* Fondo de pergamino específico para la creación de personaje */
+.parchment-bg {
+    background-image: url('../assets/images/parchment-creation-bg.png'); /* Nuevo fondo */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #4b3d2c; /* Color de texto que simula tinta */
+}
+
+/* Contenedor principal de la creación de personaje */
+.creation-form-container {
+    background-color: transparent; /* Permite que se vea el fondo de pergamino */
+    border: none;
+    box-shadow: none;
+    width: 65%; /* Ancho ajustado al pergamino */
+    max-width: 900px; /* Para pantallas grandes */
+    margin: 0 auto; /* Centra el contenedor */
+    padding: 10% 8% 5% 8%; /* Ajusta el padding para que encaje dentro del pergamino */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative; /* Para posicionar el contenido sobre el fondo */
+    z-index: 1; /* Asegura que el contenido esté por encima del fondo */
+}
+
+.creation-form-container h2 {
+    font-size: 2.2em; /* Título un poco más pequeño para encajar */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+    color: #3b2c1f;
+    text-align: center;
+}
+
+/* Estilo del marco de la imagen (mantener como antes, es perfecto) */
+.character-image-frame {
+    width: 160px; /* Tamaño ligeramente ajustado */
+    height: 160px; /* Tamaño ligeramente ajustado */
+    border: 5px solid #5a4b3d;
+    background-color: #f0e6d2;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
+    image-rendering: pixelated;
+    overflow: hidden;
+    margin-bottom: 15px; /* Espacio debajo de la imagen */
+}
+
+.character-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: pixelated;
+}
+
+/* Nombre del personaje */
+.name-display {
+    font-size: 1.3em; /* Tamaño de fuente ajustado */
+    color: #3b2c1f;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Estilos para los labels y selectores para parecer escritos */
+.form-label {
+    color: #3b2c1f !important; /* Color de tinta más oscuro */
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5px;
+    font-size: 0.9em; /* Fuente ligeramente más pequeña para encajar */
+    display: block; /* Asegura que cada label esté en su propia línea */
+    text-align: left; /* Alinea el texto a la izquierda */
+}
+
+.form-select {
+    background-color: rgba(255, 255, 255, 0.5) !important; /* Fondo semitransparente para el select */
+    border: 1px solid #7a6a5d !important; /* Borde más sutil */
+    color: #3b2c1f !important;
+    font-size: 0.9em; /* Fuente ajustada */
+    padding: 8px 10px !important;
+    background-image: none !important; /* Quita la flecha por defecto de Bootstrap */
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2); /* Sombra interna para profundidad */
+    border-radius: 3px; /* Bordes ligeramente redondeados */
+}
+
+.form-select:focus {
+    box-shadow: 0 0 0 0.25rem rgba(118, 98, 78, 0.25) !important; /* Sombra de foco sutil */
+    border-color: #5a4b3d !important;
+}
+
+/* Estilos para los "info-box" */
+.info-box {
+    margin-top: 8px; /* Menos margen superior */
+    padding: 8px 10px; /* Padding ajustado */
+    border: 1px solid #7a6a5d; /* Borde más sutil */
+    background-color: rgba(220, 200, 180, 0.3); /* Fondo semitransparente para la caja de info */
+    min-height: 40px; /* Altura mínima ajustada */
+    font-size: 0.65em; /* Fuente más pequeña */
+    text-align: left;
+    image-rendering: pixelated;
+    color: #4b3d2c;
+    border-radius: 3px;
+}
+
+/* Botón de "Subir Imagen" y "Empezar Aventura" */
+.pixel-button {
+    margin-top: 20px;
+    font-size: 0.9em;
+    padding: 12px 25px;
+}
+
+/* Ajustes responsivos para dispositivos pequeños */
+@media (max-width: 768px) {
+    .creation-form-container {
+        width: 95%;
+        padding: 5% 5% 3% 5%;
+    }
+    .creation-form-container h2 {
+        font-size: 1.8em;
+    }
+    .character-image-frame {
+        width: 120px;
+        height: 120px;
+    }
+    .name-display {
+        font-size: 1.1em;
+    }
+    .form-label, .form-select, .info-box, .pixel-button {
+        font-size: 0.75em;
+        padding: 6px 8px !important;
+    }
+    .pixel-button {
+        padding: 10px 20px;
+    }
+}

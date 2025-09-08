@@ -1,0 +1,42 @@
+body, h1, h2, h3, h4, p, label, button, input, select {
+    font-family: 'Press Start 2P', cursive;
+    image-rendering: pixelated;
+}
+
+.game-screen {
+    background-color: #2e2e2e;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-size: cover;
+    background-position: center;
+    image-rendering: pixelated;
+}
+
+.pixel-button {
+    background-color: #4b3d2c;
+    color: #f0e6d2;
+    border: 3px solid #3b2c1f;
+    border-radius: 0;
+    box-shadow: 4px 4px 0px #3b2c1f;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 0.8em;
+    image-rendering: pixelated;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.pixel-button:hover {
+    background-color: #5a4b3d;
+    color: #fff;
+}
+
+.pixel-button:active {
+    box-shadow: 0px 0px 0px #3b2c1f;
+    transform: translate(4px, 4px);
+}

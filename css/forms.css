@@ -1,0 +1,190 @@
+body {
+    margin: 0;
+    font-family: 'Press Start 2P', cursive;
+    color: #f0e6d2;
+    background-color: #1a1a1a; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; 
+}
+
+.game-container {
+    width: 100%;
+    max-width: 100%; 
+    height: 100vh; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    background-image: url('../assets/images/forest_background.gif');
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    image-rendering: optimizeSpeed; 
+    image-rendering: -moz-crisp-edges; 
+    image-rendering: -o-crisp-edges; 
+    image-rendering: -webkit-optimize-contrast; 
+    image-rendering: pixelated; 
+    image-rendering: crisp-edges; 
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.7); 
+}
+
+.logo-title {
+    margin-bottom: 40px; 
+    text-align: center;
+    display: flex; 
+    justify-content: center;
+}
+
+.logo-title img {
+    max-width: 70%;
+    height: auto;
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.split-screen {
+    display: flex; 
+    width: 80%; 
+    max-width: 900px; 
+    background-color: rgba(0, 0, 0, 0.5); 
+    border: 4px solid #5a4b3d; 
+    border-radius: 8px; 
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    overflow: hidden; 
+}
+
+.left-panel, .right-panel {
+    flex: 1; 
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-panel {
+    border-right: 2px solid #5a4b3d; 
+}
+
+.split-screen p {
+    font-size: 0.9em;
+    margin-bottom: 25px;
+    line-height: 1.5;
+    text-shadow: 2px 2px 0px #000;
+}
+
+.pixel-button {
+    background-color: #3b3b3b; 
+    border: 2px solid #8c8c8c; 
+    border-bottom: 4px solid #2b2b2b; 
+    color: #f0e6d2;
+    padding: 15px 30px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    text-shadow: 2px 2px 0px #000;
+    box-shadow: 2px 2px 0px #000; 
+}
+.pixel-button,
+a.pixel-button {
+    text-decoration: none; 
+    display: inline-block; 
+}
+
+.pixel-button:hover {
+    background-color: #555555;
+    border-top: 2px solid #a0a0a0; 
+    border-left: 2px solid #a0a0a0;
+    border-right: 2px solid #707070;
+    border-bottom: 2px solid #707070;
+    transform: translateY(2px); 
+}
+
+.pixel-button:active {
+    background-color: #2a2a2a;
+    border: 2px solid #2b2b2b;
+    transform: translateY(4px); 
+}
+
+
+img {
+    image-rendering: optimizeSpeed; 
+    image-rendering: -moz-crisp-edges; 
+    image-rendering: -o-crisp-edges; 
+    image-rendering: -webkit-optimize-contrast; 
+    image-rendering: pixelated; 
+    image-rendering: crisp-edges; 
+}
+
+
+.form-container {
+    padding: 30px;
+    background-color: rgba(220, 200, 180, 0.8); 
+    border: 4px solid #5a4b3d;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    color: #4b3d2c;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+}
+
+.form-container h2 {
+    font-size: 2em;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+    color: #3b2c1f;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-container label {
+    font-size: 0.8em;
+    align-self: flex-start; 
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+.form-container input {
+    background-color: #f0e6d2; 
+    color: #4b3d2c;
+    border: 2px solid #8c8c8c;
+    font-family: 'Press Start 2P', cursive;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box; 
+    image-rendering: pixelated;
+}
+
+.form-container input:focus {
+    outline: none;
+    border-color: #3b2c1f; 
+}
+
+.game-screen {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    image-rendering: -webkit-optimize-contrast;
+    background-image: url('../assets/images/guild_desk.png'); 
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.7);
+
+}

@@ -188,3 +188,147 @@ img {
     box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.7);
 
 }
+
+/* Aqui es para el perfil, talvez cambie algo despues  */
+.profile-container {
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 4px solid #5a4b3d;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    color: #f0e6d2;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+}
+
+.profile-container h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0px #000;
+    color: #FFD700;
+}
+
+.profile-stats, .stats-grid, .inventory-section {
+    margin-top: 20px;
+    padding: 15px;
+    border: 2px solid #5a4b3d;
+    border-radius: 5px;
+    text-align: left;
+    background-color: rgba(220, 200, 180, 0.1);
+}
+
+.profile-stats p, .stats-grid p, .inventory-section p {
+    font-size: 1em;
+    margin: 5px 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.stats-grid h3, .inventory-section h3 {
+    grid-column: 1 / -1;
+    text-align: center;
+    text-shadow: 1px 1px 0px #000;
+    color: #f0e6d2;
+    margin-bottom: 10px;
+}
+
+/* Google Font */
+body, h1, h2, h3, h4, p, label, button, input, select {
+    font-family: 'Press Start 2P', cursive;
+    image-rendering: pixelated;
+}
+
+/* Fondos y Contenedores */
+.game-screen {
+    background-color: #2e2e2e;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-size: cover;
+    background-position: center;
+}
+
+.parchment-bg {
+    background-image: url('../assets/images/parchment.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #4b3d2c;
+}
+
+.creation-form-container {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.form-control, .form-select {
+    background-color: #f0e6d2 !important;
+    color: #4b3d2c !important;
+    border: 2px solid #8c8c8c !important;
+    font-family: 'Press Start 2P', cursive !important;
+    padding: 10px !important;
+    image-rendering: pixelated;
+}
+
+.form-control:focus, .form-select:focus {
+    outline: none !important;
+    border-color: #3b2c1f !important;
+    box-shadow: none !important;
+}
+
+.pixel-button {
+    background-color: #4b3d2c;
+    color: #f0e6d2;
+    border: 3px solid #3b2c1f;
+    border-radius: 0;
+    box-shadow: 4px 4px 0px #3b2c1f;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 0.8em;
+    image-rendering: pixelated;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.pixel-button:hover {
+    background-color: #5a4b3d;
+    color: #fff;
+}
+
+.pixel-button:active {
+    box-shadow: 0px 0px 0px #3b2c1f;
+    transform: translate(4px, 4px);
+}
+
+
+.info-box {
+    margin-top: 10px;
+    padding: 10px;
+    border: 2px solid #5a4b3d;
+    background-color: rgba(220, 200, 180, 0.5);
+    min-height: 50px;
+    font-size: 0.7em;
+    text-align: left;
+    image-rendering: pixelated;
+    color: #4b3d2c;
+}
+
+#character-avatar-preview {
+    image-rendering: pixelated;
+    border: 4px solid #5a4b3d !important;
+    background-color: #f0e6d2 !important;
+}
+
+.upload-button {
+    font-family: 'Press Start 2P', cursive !important;
+}
