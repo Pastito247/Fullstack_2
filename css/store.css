@@ -53,7 +53,7 @@
 }
 
 .store-main-bg {
-  background-image: url("../assets/images/store-main-bg.png");
+  background-image: url("https://i.postimg.cc/cJnZZhvV/store-main-bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -115,7 +115,7 @@
 }
 
 .blacksmith-bg {
-  background-image: url("../assets/images/blacksmith-bg.png");
+  background-image: url("https://i.postimg.cc/mkxPBhZS/blacksmith-bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -125,7 +125,7 @@
   min-height: 100vh;
 }
 .shop-bg-equipment {
-  background-image: url("../assets/images/equipment-bg.png");
+  background-image: url("https://i.postimg.cc/q7RhG9Z2/equipment-bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -135,7 +135,7 @@
   min-height: 100vh;
 }
 .shop-bg-magic {
-  background-image: url("../assets/images/magic-bg.png");
+  background-image: url("https://i.postimg.cc/dV0VMGmY/magic-bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -145,7 +145,7 @@
   min-height: 100vh;
 }
 .shop-bg-alchemy {
-    background-image: url('../assets/images/alchemy-bg.png');
+    background-image: url('https://i.postimg.cc/3ryjhD12/alchemy-bg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -155,7 +155,7 @@
     min-height: 100vh;
 }
 .shop-bg-market {
-    background-image: url('../assets/images/store-main-bg.png');
+    background-image: url('https://i.postimg.cc/cJnZZhvV/store-main-bg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -188,7 +188,7 @@
 }
 
 .item-shelf {
-  background-image: url("../assets/images/wooden-shelf.png");
+  background-image: url('https://i.postimg.cc/HW2mpVLs/wooden-shelf.png');
   background-size: cover;
   background-position: center;
   padding: 10px 20px 20px 20px;
@@ -221,7 +221,7 @@
 }
 
 .store-info-panel {
-  background-image: url("../assets/images/wooden-floor.png");
+  background-image: url("https://i.postimg.cc/hvpRM3Y7/wooden-floor.png");
   background-size: cover;
   border: 5px solid #4b3d2c;
   padding: 30px;

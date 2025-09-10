@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/vTdZCjXq/logo-title.png">
+    <title>Gremio de Aventureros - The Fullstack Saga</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/lobby.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="game-screen lobby-bg">
+        <div class="lobby-container">
+
+            <div class="character-panel">
+                <img id="lobby-avatar" src="https://static.thenounproject.com/png/1094753-200.png" alt="Avatar">
+                <div class="character-info">
+                    <h3 id="lobby-character-name">Aventurero</h3>
+                    <p>Nivel: <span id="lobby-level">1</span></p>
+                    <div class="gold-display">
+                        <img src="https://i.postimg.cc/sfSBKPKH/golden-coin.gif" alt="Oro">
+                        <span id="lobby-gold">100</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activities-grid">
+                <h2 class="text-center">¿Qué harás hoy?</h2>
+                <div class="row justify-content-center text-center mt-4">
+                    <div class="col-md-4 mb-4">
+                        <a href="profile.html" class="activity-link">
+                            <img src="https://i.postimg.cc/4dpJvPZz/parchment.jpg" alt="Hoja de Personaje" class="activity-icon">
+                            <p class="activity-name">Hoja de Personaje</p>
+                        </a>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <a href="store-main.html" class="activity-link">
+                            <img src="https://i.postimg.cc/cJnZZhvV/store-main-bg.png" alt="Tienda" class="activity-icon">
+                            <p class="activity-name">Ir a la Tienda</p>
+                        </a>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <a href="#" class="activity-link disabled">
+                            <img src="https://i.postimg.cc/sgKG7VKV/dungeon-wall-bg.png" alt="Misiones" class="activity-icon">
+                            <p class="activity-name">Misiones (Pronto)</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html> 

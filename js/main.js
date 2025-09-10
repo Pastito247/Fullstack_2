@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         localStorage.setItem("currentUser", JSON.stringify(userData));
         alert(
-          "¡Registro Exitoso! Bienvenido al Gremio. Ahora crea a tu personaje."
+          "¡Registro Exitoso! Inicia sesion para comenzar tu aventura"
         );
-        window.location.href = "character-creation.html";
+        window.location.href = "login.html";
       }
     });
   }
@@ -69,7 +69,72 @@ document.addEventListener("DOMContentLoaded", () => {
     const creationForm = document.getElementById("character-creation-form");
     const avatarUpload = document.getElementById("avatar-upload");
     const avatarPreview = document.getElementById("character-avatar-preview");
-    let base64Avatar = "assets/images/default-avatar.png";
+    const nameDisplay = document.getElementById("character-name-display");
+    let base64Avatar = "https://static.thenounproject.com/png/1094753-200.png";
+
+    //Aqui toma el nombre del localstorage y lo usa como personaje
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (currentUser && currentUser.username) {
+      nameDisplay.textContent = currentUser.username;
+    } else {
+      alert("No se encontró un usuario. Por favor, inicia sesión.");
+      window.location.href = "index.html";
+    }
+
+    //desc
+    const descriptions = {
+      class: {
+        guerrero: "Maestro del combate. (+2 Fuerza, -1 Destreza)",
+        mago: "Domina las artes arcanas. (+2 Inteligencia, -1 Fuerza)",
+        druida: "Protector de la naturaleza. (+2 Sabiduría, -1 Carisma)",
+        paladin:
+          "Guerrero sagrado y resistente. (+2 Constitución, -1 Destreza)",
+        ladron: "Ágil y sigiloso. (+2 Destreza, -1 Constitución)",
+        bardo: "Artista carismático. (+2 Carisma, -1 Fuerza)",
+      },
+      race: {
+        enano: "Raza robusta y resistente. (+2 Constitución, -1 Destreza)",
+        elfo: "Elegantes y ágiles. (+2 Destreza, -1 Fuerza)",
+        humano: "Versátiles y adaptables. (+1 a todo)",
+        draconido: "Descendientes de dragones. (+1 Fuerza, +1 Constitución)",
+        orco: "Imponentes y fieros. (+2 Fuerza, -1 Inteligencia)",
+        tiefling: "Con ascendencia infernal. (+1 Carisma, +1 Sabiduría)",
+        gnomo: "Pequeños e ingeniosos. (+2 Inteligencia, -1 Constitución)",
+      },
+      profession: {
+        pescador:
+          "Experto en el arte de la pesca. Obtendrá bonos en minijuegos de pesca.",
+        minero:
+          "Capaz de extraer minerales preciosos. Obtendrá bonos en minijuegos de minería.",
+        cocinero:
+          "Crea festines que otorgan bonificaciones. Obtendrá bonos en minijuegos de cocina.",
+        herrero:
+          "Forja armas y armaduras. Obtendrá bonos en minijuegos de herrería.",
+        alquimista:
+          "Crea pociones y elixires. Obtendrá bonos en minijuegos de alquimia.",
+      },
+      transfondo: {
+        noble: "Creciste entre lujos. Comienzas con 100 de oro extra.",
+        aventurero:
+          "Tu vida ha sido un viaje. Comienzas con una Poción de Curación.",
+        plebeyo:
+          "Vienes de un origen humilde y resistente. Comienzas con +1 a una estadística aleatoria.",
+      },
+    };
+
+    function updateInfoBox(selectId, infoId, type) {
+      const selectElement = document.getElementById(selectId);
+      const infoElement = document.getElementById(infoId);
+      selectElement.addEventListener("change", () => {
+        const selectedValue = selectElement.value;
+        infoElement.textContent = descriptions[type][selectedValue] || "";
+      });
+    }
+
+    updateInfoBox("class-select", "class-info", "class");
+    updateInfoBox("race-select", "race-info", "race");
+    updateInfoBox("profession-select", "profession-info", "profession");
+    updateInfoBox("transfondo-select", "transfondo-info", "transfondo");
 
     avatarUpload.addEventListener("change", (event) => {
       const file = event.target.files[0];
@@ -85,21 +150,94 @@ document.addEventListener("DOMContentLoaded", () => {
 
     creationForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      const characterName = document.getElementById("character-name").value;
+
+      const characterName = currentUser.username;
       const characterClass = document.getElementById("class-select").value;
       const characterRace = document.getElementById("race-select").value;
       const characterProfession =
         document.getElementById("profession-select").value;
       const characterTransfondo =
         document.getElementById("transfondo-select").value;
-      const initialStats = {
-        strength: Math.floor(Math.random() * 6) + 12,
-        intelligence: Math.floor(Math.random() * 6) + 12,
-        constitution: Math.floor(Math.random() * 6) + 12,
-        wisdom: Math.floor(Math.random() * 6) + 12,
-        dexterity: Math.floor(Math.random() * 6) + 12,
-        charisma: Math.floor(Math.random() * 6) + 12,
+
+      if (
+        !characterClass ||
+        !characterRace ||
+        !characterProfession ||
+        !characterTransfondo
+      ) {
+        alert(
+          "Por favor, completa todas las opciones para crear tu personaje."
+        );
+        return;
+      }
+
+      // estadisticas base
+      let stats = {
+        strength: 10,
+        intelligence: 10,
+        constitution: 10,
+        wisdom: 10,
+        dexterity: 10,
+        charisma: 10,
       };
+
+      // Modificadores por Clase
+      const classModifiers = {
+        guerrero: { strength: 2, dexterity: -1 },
+        mago: { intelligence: 2, strength: -1 },
+        druida: { wisdom: 2, charisma: -1 },
+        paladin: { constitution: 2, dexterity: -1 },
+        ladron: { dexterity: 2, constitution: -1 },
+        bardo: { charisma: 2, strength: -1 },
+      };
+
+      // Modificadores por Raza
+      const raceModifiers = {
+        enano: { constitution: 2, dexterity: -1 },
+        elfo: { dexterity: 2, strength: -1 },
+        humano: {
+          strength: 1,
+          intelligence: 1,
+          constitution: 1,
+          wisdom: 1,
+          dexterity: 1,
+          charisma: 1,
+        },
+        draconido: { strength: 1, constitution: 1 },
+        orco: { strength: 2, intelligence: -1 },
+        tiefling: { charisma: 1, wisdom: 1 },
+        gnomo: { intelligence: 2, constitution: -1 },
+      };
+
+      // Aplicar modificadores
+      const classMod = classModifiers[characterClass] || {};
+      const raceMod = raceModifiers[characterRace] || {};
+
+      for (const stat in stats) {
+        stats[stat] += (classMod[stat] || 0) + (raceMod[stat] || 0);
+      }
+
+      //bonos por Trasfondo
+      let initialGold = 100;
+      let initialInventory = [];
+
+      if (characterTransfondo === "noble") {
+        initialGold += 100;
+      } else if (characterTransfondo === "aventurero") {
+        initialInventory.push({
+          id: "health-potion",
+          name: "Poción de Curación",
+          price: 30, // Precio por si quiere venderlo
+          desc: "Restaura una gran cantidad de salud.",
+          image: "https://i.postimg.cc/3xrdKshz/health-potion.png",
+        });
+      } else if (characterTransfondo === "plebeyo") {
+        const randomStat =
+          Object.keys(stats)[
+            Math.floor(Math.random() * Object.keys(stats).length)
+          ];
+        stats[randomStat] += 1;
+      }
 
       const characterData = {
         name: characterName,
@@ -109,9 +247,10 @@ document.addEventListener("DOMContentLoaded", () => {
         transfondo: characterTransfondo,
         level: 1,
         exp: 0,
-        gold: 100,
-        stats: initialStats,
+        gold: initialGold,
+        stats: stats,
         avatar: base64Avatar,
+        inventory: initialInventory,
       };
 
       localStorage.setItem("currentCharacter", JSON.stringify(characterData));
@@ -180,7 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
           inventoryList.appendChild(itemElement);
         });
       } else {
-        noInventoryMessage.style.display = "block"; // Muestra el mensaje si el inventario está vacío
+        noInventoryMessage.style.display = "block"; // mensaje por si es que si el inventario está vacío
       }
     } else {
       alert("No se encontró un personaje. Por favor, crea uno primero.");
@@ -190,19 +329,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutButton = document.getElementById("logout-button");
   if (logoutButton) {
     logoutButton.addEventListener("click", () => {
-      // Preguntamos al usuario para confirmar
+      // su preguntita
       const confirmLogout = confirm(
         "¿Estás seguro de que quieres cerrar sesión?"
       );
       if (confirmLogout) {
-        // Borramos los datos del usuario y personaje del almacenamiento local
+        // chao datos
         localStorage.removeItem("currentUser");
         localStorage.removeItem("currentCharacter");
 
-        // Avisamos al usuario y lo redirigimos a la página principal
+        // aviso
         alert("¡Has cerrado la sesión! ¡Vuelve pronto, aventurero!");
         window.location.href = "index.html";
       }
     });
+  }
+  //Lobby (lobby.html)
+  if (document.querySelector(".lobby-container")) {
+    const characterData = JSON.parse(localStorage.getItem("currentCharacter"));
+    if (characterData) {
+      document.getElementById("lobby-avatar").src = characterData.avatar;
+      document.getElementById("lobby-character-name").textContent =
+        characterData.name;
+      document.getElementById("lobby-level").textContent = characterData.level;
+      document.getElementById("lobby-gold").textContent = characterData.gold;
+    } else {
+      alert("No se encontró un personaje. Por favor, crea uno primero.");
+      window.location.href = "character-creation.html";
+    }
   }
 });

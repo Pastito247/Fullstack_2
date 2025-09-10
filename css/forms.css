@@ -1,14 +1,4 @@
-body {
-    margin: 0;
-    font-family: 'Press Start 2P', cursive;
-    color: #f0e6d2;
-    background-color: #1a1a1a; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow: hidden; 
-}
+
 
 .game-container {
     width: 100%;
@@ -18,7 +8,7 @@ body {
     flex-direction: column; 
     justify-content: center;
     align-items: center;
-    background-image: url('../assets/images/forest_background.gif');
+    background-image: url('https://i.pinimg.com/originals/93/9e/92/939e9273e3d6ef4f281cda31e9e62488.gif');
     background-size: cover; 
     background-position: center; 
     background-repeat: no-repeat; 
@@ -184,7 +174,7 @@ img {
     background-repeat: no-repeat;
     image-rendering: pixelated;
     image-rendering: -webkit-optimize-contrast;
-    background-image: url('../assets/images/guild_desk.png'); 
+    background-image: url('https://i.postimg.cc/J45sC1fb/guild-desk.png'); 
     box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.7);
 
 }

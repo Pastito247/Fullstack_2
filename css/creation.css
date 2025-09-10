@@ -1,40 +1,37 @@
-/* Fondo de pergamino específico para la creación de personaje */
 .parchment-bg {
-    background-image: url('../assets/images/parchment-creation-bg.png'); /* Nuevo fondo */
+    background-image: url('https://i.postimg.cc/MK9zYvkr/parchment-creation-bg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    color: #4b3d2c; /* Color de texto que simula tinta */
+    color: #4b3d2c;
 }
 
-/* Contenedor principal de la creación de personaje */
 .creation-form-container {
-    background-color: transparent; /* Permite que se vea el fondo de pergamino */
+    background-color: transparent;
     border: none;
     box-shadow: none;
-    width: 65%; /* Ancho ajustado al pergamino */
-    max-width: 900px; /* Para pantallas grandes */
-    margin: 0 auto; /* Centra el contenedor */
-    padding: 10% 8% 5% 8%; /* Ajusta el padding para que encaje dentro del pergamino */
+    width: 65%; 
+    max-width: 900px; 
+    margin: 0 auto; 
+    padding: 10% 8% 5% 8%; 
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative; /* Para posicionar el contenido sobre el fondo */
-    z-index: 1; /* Asegura que el contenido esté por encima del fondo */
+    position: relative; 
+    z-index: 1; 
 }
 
 .creation-form-container h2 {
-    font-size: 2.2em; /* Título un poco más pequeño para encajar */
+    font-size: 2.2em;
     margin-bottom: 20px;
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
     color: #3b2c1f;
     text-align: center;
 }
 
-/* Estilo del marco de la imagen (mantener como antes, es perfecto) */
 .character-image-frame {
-    width: 160px; /* Tamaño ligeramente ajustado */
-    height: 160px; /* Tamaño ligeramente ajustado */
+    width: 160px; 
+    height: 160px; 
     border: 5px solid #5a4b3d;
     background-color: #f0e6d2;
     padding: 5px;
@@ -44,7 +41,7 @@
     box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
     image-rendering: pixelated;
     overflow: hidden;
-    margin-bottom: 15px; /* Espacio debajo de la imagen */
+    margin-bottom: 15px; 
 }
 
 .character-image-frame img {
@@ -54,63 +51,62 @@
     image-rendering: pixelated;
 }
 
-/* Nombre del personaje */
+
 .name-display {
-    font-size: 1.3em; /* Tamaño de fuente ajustado */
+    font-size: 1.3em; 
     color: #3b2c1f;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
     margin-top: 10px;
     text-align: center;
 }
 
-/* Estilos para los labels y selectores para parecer escritos */
+
 .form-label {
-    color: #3b2c1f !important; /* Color de tinta más oscuro */
+    color: #3b2c1f !important; 
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
     margin-bottom: 5px;
-    font-size: 0.9em; /* Fuente ligeramente más pequeña para encajar */
-    display: block; /* Asegura que cada label esté en su propia línea */
-    text-align: left; /* Alinea el texto a la izquierda */
+    font-size: 0.9em;
+    display: block; 
+    text-align: left; 
 }
 
 .form-select {
-    background-color: rgba(255, 255, 255, 0.5) !important; /* Fondo semitransparente para el select */
-    border: 1px solid #7a6a5d !important; /* Borde más sutil */
+    background-color: rgba(255, 255, 255, 0.5) !important; 
+    border: 1px solid #7a6a5d !important; 
     color: #3b2c1f !important;
-    font-size: 0.9em; /* Fuente ajustada */
+    font-size: 0.9em; 
     padding: 8px 10px !important;
-    background-image: none !important; /* Quita la flecha por defecto de Bootstrap */
-    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2); /* Sombra interna para profundidad */
-    border-radius: 3px; /* Bordes ligeramente redondeados */
+    background-image: none !important; 
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2); 
+    border-radius: 3px; 
 }
 
 .form-select:focus {
-    box-shadow: 0 0 0 0.25rem rgba(118, 98, 78, 0.25) !important; /* Sombra de foco sutil */
+    box-shadow: 0 0 0 0.25rem rgba(118, 98, 78, 0.25) !important; 
     border-color: #5a4b3d !important;
 }
 
-/* Estilos para los "info-box" */
 .info-box {
-    margin-top: 8px; /* Menos margen superior */
-    padding: 8px 10px; /* Padding ajustado */
-    border: 1px solid #7a6a5d; /* Borde más sutil */
-    background-color: rgba(220, 200, 180, 0.3); /* Fondo semitransparente para la caja de info */
-    min-height: 40px; /* Altura mínima ajustada */
-    font-size: 0.65em; /* Fuente más pequeña */
+    margin-top: 8px;
+    padding: 8px 10px;
+    border: 1px solid #7a6a5d;
+    background-color: rgba(65, 63, 62, 0.3); 
+    min-height: 40px; 
+    font-size: 0.65em;
     text-align: left;
-    image-rendering: pixelated;
-    color: #4b3d2c;
+    image-rendering: pixelated; 
+    color: #000000;
     border-radius: 3px;
+    text-shadow: none;
 }
 
-/* Botón de "Subir Imagen" y "Empezar Aventura" */
+
 .pixel-button {
     margin-top: 20px;
     font-size: 0.9em;
     padding: 12px 25px;
 }
 
-/* Ajustes responsivos para dispositivos pequeños */
 @media (max-width: 768px) {
     .creation-form-container {
         width: 95%;
