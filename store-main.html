@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/vTdZCjXq/logo-title.png">
+    <title>Tienda - The Fullstack Saga</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/store.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="game-screen store-main-bg">
+        <nav class="navbar navbar-expand-lg game-navbar fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand pixel-text" href="lobby.html">
+                    <img src="https://i.postimg.cc/vTdZCjXq/logo-title.png" alt="Logo" class="navbar-logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link pixel-text" href="store-main.html">Tienda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pixel-text" href="#">Misiones</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pixel-text disabled" href="#">Social (Pronto)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pixel-text" href="#">Minijuegos</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar-player-info">
+                    <a href="profile.html">
+                        <img id="navbar-player-avatar" src="https://static.thenounproject.com/png/1094753-200.png" alt="Avatar del Jugador"
+                            class="navbar-avatar">
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="store-main-container">
+            <h2 class="text-center">Elige una tienda</h2>
+            <div class="store-menu row justify-content-center text-center mt-5" id="store-list">
+                <div class="col-6 col-md-4 mb-4">
+                    <a href="store-detail.html?shop=blacksmith" class="shop-link">
+                        <img src="https://i.postimg.cc/C5jz1Yzp/blacksmith-icon.png" alt="Herrero" class="shop-icon img-fluid">
+                        <p class="shop-name">Herrero</p>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4 mb-4">
+                    <a href="store-detail.html?shop=equipment" class="shop-link">
+                        <img src="https://i.postimg.cc/j5nDpyT5/equipment-icon.png" alt="Equipo" class="shop-icon img-fluid">
+                        <p class="shop-name">Equipo</p>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4 mb-4">
+                    <a href="store-detail.html?shop=magic" class="shop-link">
+                        <img src="https://i.postimg.cc/jdtjXpDC/magic-icon.png" alt="Magia" class="shop-icon img-fluid">
+                        <p class="shop-name">Magia</p>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4 mb-4">
+                    <a href="store-detail.html?shop=alchemy" class="shop-link">
+                        <img src="https://i.postimg.cc/cHv3dVRd/alchemy-icon.png" alt="Alquimia" class="shop-icon img-fluid">
+                        <p class="shop-name">Alquimia</p>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4 mb-4">
+                    <a href="store-detail.html?shop=market" class="shop-link">
+                        <img src="https://i.postimg.cc/xTf0HLZz/market-icon.png" alt="Mercado" class="shop-icon img-fluid">
+                        <p class="shop-name">Mercado</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <footer class="game-footer">
+        <p>&copy; 2025 The Fullstack Saga. Todos los derechos reservados.</p>
+    </footer>
+</body>
+
+</html>

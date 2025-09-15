@@ -1,0 +1,240 @@
+
+.game-navbar {
+    background-color: #2e2e2e; 
+    border-bottom: 3px solid #5a4b3d; 
+    padding: 10px 20px;
+    image-rendering: pixelated;
+    z-index: 1030; 
+}
+
+.game-navbar .navbar-brand .navbar-logo {
+    height: 40px; 
+    image-rendering: pixelated;
+}
+
+.game-navbar .nav-link,
+.game-navbar .navbar-brand {
+    color: #f0e6d2 !important; 
+    font-size: 1.1em;
+    padding: 0.5rem 1rem;
+    image-rendering: pixelated;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4);
+}
+
+.game-navbar .nav-link:hover {
+    color: #ffd700 !important; 
+}
+
+.game-navbar .nav-link.disabled {
+    color: #8c8c8c !important;
+}
+
+.game-navbar .navbar-toggler {
+    border-color: #5a4b3d;
+}
+
+.game-navbar .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28240, 230, 210, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    image-rendering: pixelated;
+}
+
+.game-navbar .navbar-player-info .navbar-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%; 
+    border: 3px solid #ffd700;
+    object-fit: cover;
+    image-rendering: pixelated;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.game-navbar .navbar-player-info .navbar-avatar:hover {
+    transform: scale(1.05);
+}
+
+.profile-bg {
+    background-image: url('https://i.postimg.cc/sgKG7VKV/dungeon-wall-bg.png'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #f0e6d2; 
+    padding-top: 80px;
+}
+
+.profile-parchment-container {
+    background-color: rgba(240, 230, 210, 0.9); 
+    border: 5px solid #5a4b3d;
+    border-radius: 8px;
+    box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.4);
+    width: 85%;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px 40px;
+    position: relative;
+    z-index: 1;
+    color: #4b3d2c;
+}
+
+
+.profile-parchment-container h2 {
+    font-size: 2.5em;
+    text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
+    color: #3b2c1f;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+
+.profile-image-frame {
+    width: 200px;
+    height: 200px;
+    border: 5px solid #5a4b3d;
+    background-color: #f0e6d2;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
+    image-rendering: pixelated;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.profile-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: pixelated;
+}
+
+.info-section, .stat-section {
+    font-size: 1.1em;
+    color: #3b2c1f;
+}
+
+.info-item, .stat-box {
+    padding: 10px;
+    border-bottom: 1px dashed rgba(75, 61, 44, 0.4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-item span, .stat-box span {
+    font-size: 1em;
+}
+
+.stat-box {
+    border: 2px solid #7a6a5d;
+    background-color: rgba(220, 200, 180, 0.5);
+    text-align: center;
+    flex-direction: column;
+    margin-bottom: 15px;
+    padding: 15px 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.stat-box .stat-label {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #5a4b3d;
+    margin-bottom: 5px;
+}
+
+.stat-box .stat-value {
+    font-size: 1.8em;
+    color: #3b2c1f;
+    margin-top: 5px;
+}
+
+/* Estilos para el título de estadísticas */
+.stat-section h3 {
+    font-size: 1.8em;
+    color: #3b2c1f;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    border-bottom: 3px double #5a4b3d;
+    padding-bottom: 10px;
+}
+
+/* Estilos para que el texto pixelado se vea mejor */
+.pixel-text {
+    image-rendering: pixelated;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .profile-parchment-container {
+        width: 95%;
+        padding: 20px 25px;
+    }
+    .profile-parchment-container h2 {
+        font-size: 1.8em;
+    }
+    .profile-image-frame {
+        width: 150px;
+        height: 150px;
+    }
+    .info-item span, .stat-box span {
+        font-size: 0.8em;
+    }
+    .stat-box .stat-value {
+        font-size: 1.4em;
+    }
+    .stat-section h3 {
+        font-size: 1.3em;
+    }
+}
+
+/* Estilos para la sección del inventario */
+.inventory-section {
+    margin-top: 30px;
+    padding: 20px;
+    border: 3px solid #5a4b3d;
+    background-color: rgba(240, 230, 210, 0.5);
+    border-radius: 8px;
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.inventory-section h3 {
+    font-size: 1.5em;
+    color: #3b2c1f;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #5a4b3d;
+    padding-bottom: 10px;
+}
+
+.inventory-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.inventory-item:hover {
+    transform: translateY(-5px);
+}
+
+.inventory-item img {
+    width: 60px;
+    height: 60px;
+    image-rendering: pixelated;
+    border: 2px solid #5a4b3d;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 5px;
+}
+
+.inventory-item p {
+    font-size: 0.8em;
+    color: #3b2c1f;
+    margin-top: 5px;
+}

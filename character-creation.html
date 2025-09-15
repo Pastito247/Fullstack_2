@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/vTdZCjXq/logo-title.png">
+    <title>Creación de Personaje - The Fullstack Saga</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/creation.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="game-screen parchment-bg">
+        <div class="creation-form-container">
+            <h2 class="text-center mb-4">Crea tu Personaje</h2>
+            <form id="character-creation-form" class="row g-4">
+
+                <div class="col-md-5 d-flex flex-column align-items-center">
+                    <div class="character-image-frame">
+                        <img id="character-avatar-preview" src="https://static.thenounproject.com/png/1094753-200.png"
+                            alt="Avatar del Personaje" class="img-fluid">
+                    </div>
+                    <label for="avatar-upload" class="pixel-button upload-button">Subir Imagen</label>
+                    <input type="file" id="avatar-upload" accept="image/*" style="display:none;">
+                    <p id="character-name-display" class="name-display mt-3"></p>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="mb-3">
+                        <label for="class-select" class="form-label">Clase:</label>
+                        <select id="class-select" class="form-select" required>
+                            <option value="" disabled selected>Elige una clase</option>
+                            <option value="guerrero">Guerrero</option>
+                            <option value="mago">Mago</option>
+                            <option value="druida">Druida</option>
+                            <option value="paladin">Paladín</option>
+                            <option value="ladron">Ladrón</option>
+                            <option value="bardo">Bardo</option>
+                        </select>
+                        <div class="info-box mt-2" id="class-info"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="race-select" class="form-label">Raza:</label>
+                        <select id="race-select" class="form-select" required>
+                            <option value="" disabled selected>Elige una raza</option>
+                            <option value="enano">Enano</option>
+                            <option value="elfo">Elfo</option>
+                            <option value="humano">Humano</option>
+                            <option value="draconido">Dracónido</option>
+                            <option value="orco">Orco</option>
+                            <option value="tiefling">Tiefling</option>
+                            <option value="gnomo">Gnomo</option>
+                        </select>
+                        <div class="info-box mt-2" id="race-info"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="profession-select" class="form-label">Profesión:</label>
+                        <select id="profession-select" class="form-select" required>
+                            <option value="" disabled selected>Elige una profesión</option>
+                            <option value="pescador">Pescador</option>
+                            <option value="minero">Minero</option>
+                            <option value="cocinero">Cocinero</option>
+                            <option value="herrero">Herrero</option>
+                            <option value="alquimista">Alquimista</option>
+                        </select>
+                        <div class="info-box mt-2" id="profession-info"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="transfondo-select" class="form-label">Transfondo:</label>
+                        <select id="transfondo-select" class="form-select" required>
+                            <option value="" disabled selected>Elige un transfondo</option>
+                            <option value="noble">Noble</option>
+                            <option value="aventurero">Aventurero</option>
+                            <option value="plebeyo">Plebeyo</option>
+                        </select>
+                        <div class="info-box mt-2" id="transfondo-info"></div>
+                    </div>
+                </div>
+
+                <div class="d-grid mt-4">
+                    <button type="submit" class="pixel-button">¡Empezar Aventura!</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <footer class="game-footer">
+        <p>&copy; 2025 The Fullstack Saga. Todos los derechos reservados.</p>
+    </footer>
+</body>
+
+</html>
