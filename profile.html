@@ -41,8 +41,8 @@
                 </div>
                 <div class="navbar-player-info">
                     <a href="profile.html">
-                        <img id="navbar-player-avatar" src="https://static.thenounproject.com/png/1094753-200.png" alt="Avatar del Jugador"
-                            class="navbar-avatar">
+                        <img id="navbar-player-avatar" src="https://static.thenounproject.com/png/1094753-200.png"
+                            alt="Avatar del Jugador" class="navbar-avatar">
                     </a>
                 </div>
             </div>
@@ -51,11 +51,18 @@
         <div id="profile-container" class="profile-parchment-container">
             <h2 class="text-center mb-4">Perfil de <span id="character-name-display">Héroe</span></h2>
 
+            <div class="text-center mb-4">
+                <button id="edit-profile-button" class="pixel-button" data-bs-toggle="modal"
+                    data-bs-target="#editProfileModal">
+                    Editar Perfil
+                </button>
+            </div>
+
             <div class="row g-4 mb-4">
                 <div class="col-md-5 d-flex flex-column align-items-center">
                     <div class="profile-image-frame">
-                        <img id="profile-avatar" src="https://static.thenounproject.com/png/1094753-200.png" alt="Avatar del Personaje"
-                            class="img-fluid">
+                        <img id="profile-avatar" src="https://static.thenounproject.com/png/1094753-200.png"
+                            alt="Avatar del Personaje" class="img-fluid">
                     </div>
                 </div>
 
@@ -140,11 +147,39 @@
                     </div>
                 </div>
             </div>
-             <div class="text-center mt-4">
+            <div class="text-center mt-4">
                 <button id="logout-button" class="pixel-button">Cerrar Sesión</button>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content parchment-bg">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel">Editar Personaje</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-3">
+                        <img id="edit-avatar-preview" src="assets/images/default-avatar.png"
+                            alt="Previsualización del Avatar" class="profile-image-frame mb-2">
+                        <label for="edit-avatar-upload" class="pixel-button upload-button">Cambiar Imagen</label>
+                        <input type="file" id="edit-avatar-upload" accept="image/*" style="display:none;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-character-name" class="form-label">Nombre del Personaje:</label>
+                        <input type="text" id="edit-character-name" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="pixel-button" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" id="save-profile-changes" class="pixel-button">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>

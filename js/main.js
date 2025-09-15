@@ -44,8 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const usernameInput = document.getElementById("username").value;
       const passwordInput = document.getElementById("password").value;
 
-      const userData = JSON.parse(localStorage.getItem("currentUser"));
 
+      const userData = JSON.parse(localStorage.getItem("currentUser"));
       if (
         userData &&
         userData.username === usernameInput &&
@@ -343,6 +343,71 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "index.html";
       }
     });
+    const editProfileModal = document.getElementById('editProfileModal');
+    if (editProfileModal) {
+        const characterData = JSON.parse(localStorage.getItem("currentCharacter"));
+        const editNameInput = document.getElementById('edit-character-name');
+        const editAvatarPreview = document.getElementById('edit-avatar-preview');
+        const editAvatarUpload = document.getElementById('edit-avatar-upload');
+        const saveButton = document.getElementById('save-profile-changes');
+        let newAvatarBase64 = null;
+
+        // Cargar datos actuales cuando el modal se abre
+        editProfileModal.addEventListener('show.bs.modal', function () {
+            if (characterData) {
+                editNameInput.value = characterData.name;
+                editAvatarPreview.src = characterData.avatar;
+                newAvatarBase64 = null; // Resetea la nueva imagen
+            }
+        });
+
+        // Previsualizar nueva imagen de avatar
+        editAvatarUpload.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    editAvatarPreview.src = e.target.result;
+                    newAvatarBase64 = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Guardar los cambios
+        saveButton.addEventListener('click', function() {
+            // Obtener datos del personaje desde localStorage de nuevo por si acaso
+            let currentCharacter = JSON.parse(localStorage.getItem("currentCharacter"));
+            let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            // Actualizar el nombre
+            const newName = editNameInput.value.trim();
+            if (newName && newName !== "") {
+                currentCharacter.name = newName;
+                currentUser.username = newName;
+            }
+
+            // Actualizar el avatar si se eligió uno nuevo
+            if (newAvatarBase64) {
+                currentCharacter.avatar = newAvatarBase64;
+            }
+
+            // Guardar el objeto actualizado en localStorage
+            localStorage.setItem('currentCharacter', JSON.stringify(currentCharacter));
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            // Actualizar la vista del perfil en tiempo real
+            document.getElementById('character-name-display').textContent = currentCharacter.name;
+            document.getElementById('profile-avatar').src = currentCharacter.avatar;
+            document.getElementById('navbar-player-avatar').src = currentCharacter.avatar; // Actualizar también el del navbar
+
+            // Cerrar el modal (requiere la instancia del modal de Bootstrap)
+            const modalInstance = bootstrap.Modal.getInstance(editProfileModal);
+            modalInstance.hide();
+            
+            alert('¡Perfil actualizado con éxito! Inicie sesion nuevamente');
+            window.location.href = "login.html";
+        });
+    }
+    
   }
   //Lobby (lobby.html)
   if (document.querySelector(".lobby-container")) {
