@@ -293,3 +293,44 @@
   margin-right: 5px;
   image-rendering: pixelated;
 }
+/* En el archivo original, agregar esta consulta de medios */
+@media (max-width: 768px) {
+    .store-main-container,
+    .store-container {
+        width: 100%; /* Ocupa todo el ancho en móviles */
+        padding: 15px;
+    }
+
+    .store-menu .col-md-4 {
+        flex: 0 0 50%; /* Muestra dos columnas de tiendas */
+        max-width: 50%;
+    }
+
+    .vendor-container {
+        flex-direction: column; /* Vendedor y estante en columna */
+        align-items: center;
+    }
+
+    .vendor-image {
+        width: 150px; /* Reduce el tamaño del vendedor */
+        margin-bottom: 10px;
+    }
+
+    .item-shelf {
+        width: 100%; /* Ocupa todo el ancho */
+        gap: 10px;
+    }
+
+    .shop-item-card img {
+        width: 80px; /* Reduce el tamaño de los íconos de la tienda */
+        height: 80px;
+    }
+
+    .store-info-panel .row.g-4 {
+        flex-direction: column; /* Apila las cajas de información */
+    }
+
+    .info-box {
+        margin-bottom: 15px;
+    }
+}
