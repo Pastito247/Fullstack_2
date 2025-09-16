@@ -111,3 +111,16 @@
     cursor: not-allowed;
     filter: grayscale(80%);
 }
+
+@media (max-width: 768px) {
+    .character-panel {
+        flex-direction: column; 
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .character-panel img {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
