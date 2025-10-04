@@ -68,6 +68,7 @@
     border-radius: 8px;
     padding: 30px;
     color: #f0e6d2;
+    margin-left: 15%;
 }
 
 .activities-grid h2 {
@@ -123,4 +124,50 @@
         margin-right: 0;
         margin-bottom: 10px;
     }
+}
+/* === LOBBY – centrar actividades y responsive === */
+
+/* Centrar el panel de actividades y limitar ancho */
+.activities-grid{
+  margin: 0 auto;           /* centra horizontalmente */
+  max-width: 1100px;        /* ancho máximo cómodo */
+}
+
+/* Asegurar que las columnas se centren dentro del row */
+.activities-grid .row{
+  justify-content: center;
+}
+
+/* Tablet */
+@media (max-width: 1024px){
+  .activities-grid{
+    padding: 24px;
+    max-width: 920px;
+  }
+  .activities-grid h2{ font-size: 1.8em; }
+  .activity-link .activity-icon{ height: 110px; }
+}
+
+/* Móvil */
+@media (max-width: 768px){
+  .lobby-bg{ padding-top: 70px; } /* un poco menos de offset para la navbar */
+  .lobby-container{ width: 94%; }
+
+  .activities-grid{
+    margin: 0 auto;
+    padding: 18px;
+    max-width: 640px;
+    border-width: 4px;
+  }
+  .activities-grid h2{
+    font-size: 1.6em;
+    text-align: center;
+  }
+  .activity-link .activity-icon{
+    height: 100px;
+    box-shadow: 3px 3px 0 rgba(0,0,0,.35);
+  }
+  .activity-link .activity-name{
+    font-size: 0.95em;
+  }
 }

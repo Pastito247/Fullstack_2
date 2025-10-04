@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.min.css";
-import './styles/global.css';
 // Importados
 import "./styles/original/global.css";
 import "./styles/original/forms.css";

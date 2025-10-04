@@ -1,21 +1,30 @@
 import { Link } from "react-router-dom";
 
+import "../styles/original/global.css";
+import "../styles/original/forms.css";
+
 export default function Home() {
   return (
-    <main className="container py-5 home-hero">
-      <div className="text-center my-5">
-        <img src="https://i.postimg.cc/vTdZCjXq/logo-title.png" alt="The Fullstack Saga" className="mb-4"/>
-        <h1 className="display-5 mb-3">Retoma las riendas de tu historia</h1>
-        <p className="lead">Embarcate en la aventura</p>
-        <div className="d-flex gap-3 justify-content-center mt-4">
-          <Link className="btn btn-primary" to="/login">
+    <main className="game-container">
+      <div className="logo-title">
+        <img src="https://i.postimg.cc/vTdZCjXq/logo-title.png" alt="The Fullstack Saga" />
+      </div>
+
+      <section className="split-screen">
+        <div className="left-panel">
+          <p>Retoma las riendas de tu historia</p>
+          <Link to="/login" className="pixel-button">
             Login
           </Link>
-          <Link className="btn btn-outline-light" to="/register">
+        </div>
+
+        <div className="right-panel">
+          <p>Embarcate en la aventura</p>
+          <Link to="/register" className="pixel-button">
             Register
           </Link>
         </div>
-      </div>
+      </section>
     </main>
   );
 }

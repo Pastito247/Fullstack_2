@@ -124,7 +124,7 @@
   image-rendering: pixelated;
   min-height: 100vh;
 }
-.shop-bg-equipment {
+.equipment-bg {
   background-image: url("https://i.postimg.cc/q7RhG9Z2/equipment-bg.png");
   background-size: cover;
   background-position: center;
@@ -134,7 +134,7 @@
   image-rendering: pixelated;
   min-height: 100vh;
 }
-.shop-bg-magic {
+.magic-bg {
   background-image: url("https://i.postimg.cc/dV0VMGmY/magic-bg.png");
   background-size: cover;
   background-position: center;
@@ -144,7 +144,7 @@
   image-rendering: pixelated;
   min-height: 100vh;
 }
-.shop-bg-alchemy {
+.alchemy-bg {
     background-image: url('https://i.postimg.cc/3ryjhD12/alchemy-bg.png');
     background-size: cover;
     background-position: center;
@@ -154,8 +154,8 @@
     image-rendering: pixelated;
     min-height: 100vh;
 }
-.shop-bg-market {
-    background-image: url('https://i.postimg.cc/cJnZZhvV/store-main-bg.png');
+.market-bg {
+    background-image: url('https://i.postimg.cc/zfszR6mz/market-bg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

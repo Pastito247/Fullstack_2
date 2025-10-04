@@ -1,18 +1,44 @@
+import "../styles/original/global.css";
+import "../styles/original/forms.css";
+
 export default function Login() {
   return (
-    <main className="container py-5 login-page">
-      <h2 className="mb-4 text-center">Acceso al Gremio</h2>
-      <form className="mx-auto" style={{ maxWidth: 420 }}>
-        <div className="mb-3">
-          <label className="form-label">Usuario:</label>
-          <input type="text" className="form-control" />
+    <>
+      <div className="game-screen login-screen">
+        <div className="form-container login-card">
+          <h2 className="form-title login-title">
+            <span>Acceso al</span>
+            <span>Gremio</span>
+          </h2>
+
+          <form id="login-form" className="login-form">
+            <label htmlFor="username">Usuario:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              className="pixel-input"
+              placeholder="Nombre de Héroe"
+              required
+            />
+
+            <label htmlFor="password">Contraseña:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              className="pixel-input"
+              placeholder="Tu Contraseña"
+              required
+            />
+
+            <button type="submit" className="pixel-button login-submit">
+              Entrar
+            </button>
+          </form>
         </div>
-        <div className="mb-3">
-          <label className="form-label">Contraseña:</label>
-          <input type="password" className="form-control" />
-        </div>
-        <button className="btn btn-primary w-100">Entrar</button>
-      </form>
-    </main>
+      </div>
+    </>
   );
 }
+

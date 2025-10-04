@@ -1,80 +1,235 @@
-body {
-    font-family: 'Press Start 2P', cursive;
-    color: #f0e6d2;
-    background-color: #1a1a1a;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
+/* === Fuentes pixel === */
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=Press+Start+2P&display=swap");
+
+/* === Variables de fuente === */
+:root {
+  --font-pixel: "Press Start 2P", system-ui, sans-serif;
+  --font-pixel-sans: "Pixelify Sans", system-ui, sans-serif;
 }
+
+/* === Tipografía base (legible) === */
+body,
+.game-container,
+.game-screen,
+.game-footer {
+  font-family: var(--font-pixel-sans);
+}
+
+/* === Titulares / textos “retro” === */
+h1,
+h2,
+h3,
+.logo-title,
+.split-screen p,
+.pixel-button {
+  font-family: var(--font-pixel);
+  letter-spacing: 0.5px;
+  -webkit-font-smoothing: none;
+  text-rendering: optimizeSpeed;
+}
+
+.logo-title img { image-rendering: pixelated; }
+
+/* Ajustes para que el texto no quede alto */
+.split-screen p {
+  margin-bottom: 5px;
+  padding-bottom: 0;
+}
+.split-screen .pixel-button {
+  margin-top: 5px;
+}
+
+/* === Botón pixel === */
+.pixel-button {
+  background-color: #4b3d2c;
+  color: #f0e6d2;
+  border: 3px solid #3b2c1f;
+  border-radius: 0;
+  box-shadow: 4px 4px 0px #3b2c1f;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;            
+  line-height: 1.4;
+  image-rendering: pixelated;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.pixel-button:hover {
+  background-color: #5a4b3d;
+  color: #fff;
+}
+.pixel-button:active {
+  box-shadow: 0px 0px 0px #3b2c1f;
+  transform: translate(4px, 4px);
+}
+
+/* === Fondo / layout general === */
+body {
+  color: #f0e6d2;
+  background-color: #1a1a1a;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
 .game-screen {
-    background-color: #2e2e2e;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-size: cover;
-    background-position: center;
-    image-rendering: pixelated;
-    flex-direction: column;
+  background-color: #2e2e2e;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-size: cover;
+  background-position: center;
+  image-rendering: pixelated;
+  flex-direction: column;
 }
 
 main {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.pixel-button {
-    background-color: #4b3d2c;
-    color: #f0e6d2;
-    border: 3px solid #3b2c1f;
-    border-radius: 0;
-    box-shadow: 4px 4px 0px #3b2c1f;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    font-size: 0.8em;
-    image-rendering: pixelated;
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
-}
-
-.pixel-button:hover {
-    background-color: #5a4b3d;
-    color: #fff;
-}
-
-.pixel-button:active {
-    box-shadow: 0px 0px 0px #3b2c1f;
-    transform: translate(4px, 4px);
-}
-
-
+/* === Footer === */
 .game-footer {
-    width: 100%; 
-    padding: 15px;
-    background-color: #2e2e2e; 
-    border-top: 3px solid #5a4b3d; 
-    color: #f0e6d2;
-    text-align: center;
-    font-size: 0.8em;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
-    position: relative; 
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
+  width: 100%;
+  padding: 15px;
+  background-color: #2e2e2e;
+  color: #f0e6d2;
+  text-align: center;
+  font-size: 0.8em;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+  position: relative;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
 }
+
+/* === Títulos pixel en otras pantallas === */
+.lobby h2,
+.profile h2,
+.store h2,
+.creation__title {
+  font-family: var(--font-pixel);
+}
+
+/* === Responsive === */
 @media (max-width: 768px) {
-    body {
-        font-size: 14px; /* Ajusta el tamaño base de la fuente para móviles */
-    }
+  body { font-size: 14px; }
+  .split-screen p { line-height: 1.5; margin: 8px 0; }
+}
+
+/* === NAVBAR PIXEL RPG === */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2b2b2b;
+  padding: 8px 20px;
+  height: 60px;
+  border: none;              /* 🔑 quitamos bordes */
+  box-shadow: none;          /* sin sombras duras */
+}
+
+/* Logo izquierda */
+.navbar-logo img {
+  height: 40px;
+  image-rendering: pixelated;
+}
+
+/* Links centrados */
+.navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+.navbar-center a {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  color: #d9d9d9;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.navbar-center a:hover { color: #ffd700; }
+
+/* Avatar derecha */
+.navbar-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid #ffd700;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+
+/* NAVBAR responsive */
+@media (max-width: 1024px){
+  .navbar { height: 56px; padding: 8px 16px; }
+  .navbar-logo img { height: 34px; }
+  .navbar-center { gap: 20px; }
+  .navbar-center a { font-size: 11px; }
+  .navbar-avatar img { width: 36px; height: 36px; border-width: 2px; }
+}
+@media (max-width: 768px){
+  .navbar {
+    height: auto;
+    padding: 8px 12px;
+    align-items: center;
+    row-gap: 6px;
+  }
+  .navbar-logo { order: 1; }
+  .navbar-avatar { order: 2; }
+  .navbar-logo img { height: 28px; }
+  .navbar-avatar img { width: 30px; height: 30px; border-width: 2px; }
+  .navbar-center {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 4px 0 6px;
+  }
+  .navbar-center a {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+}
+
+/* ===== Layout general con Footer fijo abajo ===== */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main, .game-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+footer {
+  margin-top: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #f0e6d2;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  padding: 12px;
+  text-align: center;
+  border: none;              /* 🔑 sin borde superior */
 }

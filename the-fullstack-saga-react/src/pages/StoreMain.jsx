@@ -1,29 +1,53 @@
+// src/pages/StoreMain.jsx
 import { Link } from "react-router-dom";
-
-const mock = [
-  { id: 1, name: "Espada corta", price: 50 },
-  { id: 2, name: "Armadura de cuero", price: 80 },
-];
+import "../styles/original/global.css";
+import "../styles/original/store.css";
 
 export default function StoreMain() {
   return (
-    <main className="container py-5 store-page">
-      <h2 className="mb-4">Tiendas del Reino</h2>
-      <div className="row g-3">
-        {mock.map((i) => (
-          <div key={i.id} className="col-12 col-sm-6 col-md-4">
-            <div className="card h-100 p-3 d-flex">
-              <h5 className="mb-2">{i.name}</h5>
-              <div className="mt-auto d-flex justify-content-between align-items-center">
-                <span>${i.price}</span>
-                <Link className="btn btn-sm btn-primary" to="/store-detail">
-                  Ver
-                </Link>
-              </div>
+    <>
+      <div className="game-screen store-main-bg">
+        <div className="store-main-container">
+          <h2 className="text-center">Elige una tienda</h2>
+
+          <div className="store-menu row justify-content-center text-center mt-5" id="store-list">
+            <div className="col-6 col-md-4 mb-4">
+              <Link to="/store/blacksmith" className="shop-link">
+                <img src="https://i.postimg.cc/C5jz1Yzp/blacksmith-icon.png" alt="Herrero" className="shop-icon img-fluid" />
+                <p className="shop-name">Herrero</p>
+              </Link>
+            </div>
+
+            <div className="col-6 col-md-4 mb-4">
+              <Link to="/store/equipment" className="shop-link">
+                <img src="https://i.postimg.cc/j5nDpyT5/equipment-icon.png" alt="Equipo" className="shop-icon img-fluid" />
+                <p className="shop-name">Equipo</p>
+              </Link>
+            </div>
+
+            <div className="col-6 col-md-4 mb-4">
+              <Link to="/store/magic" className="shop-link">
+                <img src="https://i.postimg.cc/jdtjXpDC/magic-icon.png" alt="Magia" className="shop-icon img-fluid" />
+                <p className="shop-name">Magia</p>
+              </Link>
+            </div>
+
+            <div className="col-6 col-md-4 mb-4">
+              <Link to="/store/alchemy" className="shop-link">
+                <img src="https://i.postimg.cc/cHv3dVRd/alchemy-icon.png" alt="Alquimia" className="shop-icon img-fluid" />
+                <p className="shop-name">Alquimia</p>
+              </Link>
+            </div>
+
+            <div className="col-6 col-md-4 mb-4">
+              <Link to="/store/market" className="shop-link">
+                <img src="https://i.postimg.cc/xTf0HLZz/market-icon.png" alt="Mercado" className="shop-icon img-fluid" />
+                <p className="shop-name">Mercado</p>
+              </Link>
             </div>
           </div>
-        ))}
+        </div>
       </div>
-    </main>
+    </>
   );
 }

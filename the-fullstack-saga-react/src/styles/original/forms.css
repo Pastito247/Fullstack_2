@@ -1,5 +1,3 @@
-
-
 .game-container {
     width: 100%;
     max-width: 100%; 
@@ -29,7 +27,7 @@
 }
 
 .logo-title img {
-    max-width: 70%;
+    max-width: 80%;
     height: auto;
     image-rendering: optimizeSpeed;
     image-rendering: -moz-crisp-edges;
@@ -49,6 +47,7 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
     overflow: hidden;
 }
+
 .left-panel, .right-panel {
     flex: 1; 
     padding: 30px;
@@ -83,6 +82,7 @@
     text-shadow: 2px 2px 0px #000;
     box-shadow: 2px 2px 0px #000; 
 }
+
 .pixel-button,
 a.pixel-button {
     text-decoration: none; 
@@ -104,7 +104,6 @@ a.pixel-button {
     transform: translateY(4px); 
 }
 
-
 img {
     image-rendering: optimizeSpeed; 
     image-rendering: -moz-crisp-edges; 
@@ -113,7 +112,6 @@ img {
     image-rendering: pixelated; 
     image-rendering: crisp-edges; 
 }
-
 
 .form-container {
     padding: 30px;
@@ -175,7 +173,6 @@ img {
     image-rendering: -webkit-optimize-contrast;
     background-image: url('https://i.postimg.cc/J45sC1fb/guild-desk.png'); 
     box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.7);
-
 }
 
 @media (max-width: 768px) {
@@ -192,4 +189,125 @@ img {
     .left-panel {
         border-bottom: 2px solid #5a4b3d;
     }
+}
+.register-screen{
+  padding-top: 40px;
+  padding-bottom: 56px;
+}
+
+/* Panel más angosto y con menos padding */
+.register-card{
+  width: min(800px, 88vw);     /* antes 420–540px: lo hacemos un poco más angosto */
+  margin: 0 auto;
+  padding: 16px 18px;          /* menos padding vertical/horizontal */
+  max-height: 220%;  /* nunca supera la pantalla */
+  margin-bottom: 20%;
+  margin-top: 17%;
+}
+
+/* Título en 2 líneas pero más pequeño */
+.register-title{
+  margin: 0 0 10px;
+  line-height: 1.05;
+  margin-top: 15%;
+}
+.register-title span{
+  font-family: 'Press Start 2P', var(--font-pixel, cursive);
+  font-size: clamp(18px, 2.4vw, 30px);  
+}
+
+.register-form{
+  gap: 8px;                   
+}
+
+.register-form .pixel-input,
+.register-form input[type="date"]{
+  font-size: 14px;             /* Press Start 2P legible y compacto */
+  padding: 8px 10px;           /* menos alto */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Labels un poquito más chicos */
+.register-form label{
+  font-size: 0.75em;
+}
+
+/* Botón más pegado y bajo */
+.register-submit{
+  margin-top: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+/* Ajuste fino en pantallas muy altas (que no se vea “perdido”) */
+@media (min-height: 900px){
+  .register-screen{ padding-top: 56px; padding-bottom: 64px; }
+}
+
+/* Móviles: mantener compacto sin cortar nada */
+@media (max-width: 480px){
+  .register-card{ width: min(92vw, 380px); padding: 14px 16px; }
+  .register-title span{ font-size: clamp(18px, 5.6vw, 28px); }
+  .register-submit{ font-size: 13px; padding: 9px 12px; }
+}
+
+/* ===== Login – compacto y centrado (match Register) ===== */
+
+.login-screen{
+  padding-top: 48px;
+  padding-bottom: 56px;
+}
+
+.login-card{
+  width: min(400px, 88vw);
+  margin: 0 auto;
+  padding: 16px 18px;
+  max-height: calc(100vh - 120px);
+  overflow: auto;
+}
+
+.login-title{
+  display: grid;
+  gap: 2px;
+  text-align: center;
+  margin: 0 0 10px;
+  line-height: 1.05;
+}
+.login-title span{
+  font-family: 'Press Start 2P', var(--font-pixel, cursive);
+  font-size: clamp(18px, 2.4vw, 30px);
+}
+
+.login-form{
+  display: grid;
+  gap: 10px;
+}
+
+.login-form .pixel-input{
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+  padding: 8px 10px;
+}
+
+.login-form label{
+  font-size: 0.75em;
+}
+
+.login-submit{
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+/* móviles */
+@media (max-width: 480px){
+  .login-card{ width: min(92vw, 380px); padding: 14px 16px; }
+  .login-title span{ font-size: clamp(18px, 5.6vw, 28px); }
+  .login-submit{ font-size: 13px; padding: 9px 12px; }
 }
