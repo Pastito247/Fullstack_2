@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Uncial+Antiqua&display=swap');
+
+body {
+  background-color: #f8f4e3;
+  font-family: 'Cinzel', serif;
+}
+
+.bg-parchment {
+  background: url('../img/bg-parchment.jpg') center/cover no-repeat;
+}
+
+.text-gold {
+  color: #d4af37;
+}
+
+.medieval-title {
+  font-family: 'Uncial Antiqua', cursive;
+  letter-spacing: 1px;
+}
+
+.parchment-box {
+  background-color: rgba(255, 248, 220, 0.9);
+  padding: 1.5rem;
+  border: 2px solid #d4af37;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+}

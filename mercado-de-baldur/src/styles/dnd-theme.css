@@ -1,0 +1,194 @@
+/* 🌌 El Mercado de Baldur — Tema Dungeons & Dragons */
+
+/* === FUENTES === */
+@import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Crimson+Text:wght@400;600;700&display=swap');
+
+/* === PALETA DE COLORES D&D === */
+:root {
+  --bg-parchment: #fdf5e6;
+  --bg-dark: #3a2f2f;
+  --accent-gold: #d4af37;
+  --accent-red: #7a1f1f;
+  --accent-blue: #30475e;
+  --text-primary: #2c1b0c;
+  --text-light: #f7e8c0;
+  --shadow: rgba(0, 0, 0, 0.4);
+}
+
+
+/* === FONDO GENERAL === */
+body {
+  background: url('https://i.ibb.co/4K4D2hx/parchment-texture.jpg') repeat;
+  background-size: cover;
+  font-family: 'Crimson Text', serif;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* === NAVBAR === */
+.navbar {
+  background-color: var(--bg-dark) !important;
+  border-bottom: 3px solid var(--accent-gold);
+  box-shadow: 0 4px 10px var(--shadow);
+}
+
+.navbar-brand {
+  font-family: 'Uncial Antiqua', cursive;
+  color: var(--accent-gold) !important;
+  text-shadow: 0 0 10px #a67c00;
+}
+
+/* === TITULOS === */
+h1, h2, h3, h4 {
+  font-family: 'Uncial Antiqua', cursive;
+  color: var(--accent-red);
+  text-shadow: 1px 1px 3px #000;
+}
+
+/* === TARJETAS (como productos o tiendas) === */
+.card {
+  background: rgba(255, 250, 230, 0.95);
+  border: 2px solid var(--accent-gold);
+  box-shadow: 0 4px 10px var(--shadow);
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px var(--shadow);
+}
+
+/* === BOTONES === */
+.btn {
+  font-family: 'Crimson Text', serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-warning,
+.btn-outline-warning {
+  background-color: var(--accent-gold);
+  border-color: var(--accent-gold);
+  color: #2c1b0c;
+}
+
+.btn-warning:hover,
+.btn-outline-warning:hover {
+  background-color: var(--accent-red);
+  border-color: var(--accent-red);
+  color: var(--text-light);
+}
+
+/* === FORMULARIOS === */
+input, select, textarea {
+  background-color: #fdf5e6;
+  border: 2px solid var(--accent-gold);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: 'Crimson Text', serif;
+}
+
+/* === FOOTER === */
+footer {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  border-top: 3px solid var(--accent-gold);
+  padding: 20px 0;
+  text-align: center;
+  font-family: 'Crimson Text', serif;
+}
+
+/* === ENCABEZADOS DECORATIVOS === */
+.section-title {
+  text-align: center;
+  font-family: 'Uncial Antiqua', cursive;
+  color: var(--accent-gold);
+  text-shadow: 0 0 8px #000;
+  margin: 30px 0;
+  position: relative;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 150px;
+  background-color: var(--accent-gold);
+  margin: 10px auto 0 auto;
+  box-shadow: 0 0 8px var(--accent-gold);
+}
+
+/* === DECORACION EXTRA === */
+hr {
+  border: none;
+  height: 2px;
+  background-color: var(--accent-gold);
+  margin: 20px 0;
+}
+
+/* === HERO SECTION === */
+.hero-banner {
+  position: relative;
+  background-image: url("../assets/img/A_digital_painting_for_El_Mercado_de_Baldur_depi.png");
+  background-size: cover;
+  background-position: center;
+  min-height: 70vh;
+  color: var(--text-light);
+  overflow: hidden;
+  border-bottom: 4px solid var(--accent-gold);
+  box-shadow: 0 10px 20px var(--shadow);
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.3)
+  );
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  padding: 20px;
+}
+
+.hero-title {
+  font-family: "Uncial Antiqua", cursive;
+  font-size: 3.5rem;
+  color: var(--accent-gold);
+  text-shadow: 0 0 15px #000, 0 0 25px var(--accent-gold);
+}
+
+.hero-subtitle {
+  font-family: "Crimson Text", serif;
+  font-size: 1.3rem;
+  margin-top: 10px;
+  color: #f8e4b2;
+  text-shadow: 0 0 10px #000;
+}
+
+/* === HERO BUTTON EFFECT === */
+.hero-banner .btn-warning {
+  background-color: var(--accent-gold);
+  color: var(--text-primary);
+  border: 2px solid var(--accent-gold);
+  transition: all 0.3s ease;
+}
+
+.hero-banner .btn-warning:hover {
+  background-color: var(--accent-red);
+  border-color: var(--accent-red);
+  color: var(--text-light);
+  box-shadow: 0 0 12px var(--accent-gold), 0 0 24px var(--accent-red);
+}
+
