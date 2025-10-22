@@ -1,0 +1,825 @@
+/* --- RESETEO GLOBAL --- */
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  background-color: #1a1a1a;
+  color: #f5f5f5;
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+}
+/* --- MODO LUZ DE FORJA --- */
+body.modo-luz {
+  background-color: #f4efe4;
+  color: #1a1a1a;
+}
+
+body.modo-luz .navbar {
+  background: linear-gradient(90deg, #ffe0a1, #f4b66a);
+  border-bottom: 2px solid #b87333;
+}
+body.modo-luz .navbar-brand {
+  color: #5a3b00 !important;
+}
+body.modo-luz .nav-link {
+  color: #3a2a00 !important;
+}
+body.modo-luz .nav-link:hover {
+  color: #b87333 !important;
+}
+
+body.modo-luz .card {
+  background-color: #fff3d6;
+  color: #2a1a00;
+  border: 1px solid #b87333;
+}
+body.modo-luz .card-title {
+  color: #8a5500;
+}
+
+body.modo-luz footer {
+  background: linear-gradient(90deg, #ffe0a1, #f4b66a);
+  color: #3a2a00;
+  border-top: 2px solid #b87333;
+}
+
+body.modo-luz .btn-add {
+  background-color: #e08a00;
+  color: #fff;
+}
+body.modo-luz .btn-add:hover {
+  background-color: #ffb733;
+  color: #000;
+}
+
+.btn-toggle-tema {
+  margin-left: 1rem;
+  background: linear-gradient(145deg, #2b2b2b, #1a1a1a);
+  border: 1px solid #b87333;
+  color: #c8a54e;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.3rem 0.8rem;
+  transition: all 0.3s ease;
+  font-family: "Cinzel", serif;
+}
+.btn-toggle-tema:hover {
+  background-color: #c8a54e;
+  color: #1a1a1a;
+  box-shadow: 0 0 10px rgba(200, 165, 78, 0.6);
+}
+
+/* Adaptación para tema claro */
+body.modo-luz .btn-toggle-tema {
+  background: linear-gradient(145deg, #f4b66a, #ffe0a1);
+  border-color: #b87333;
+  color: #3a2a00;
+}
+body.modo-luz .btn-toggle-tema:hover {
+  background-color: #b87333;
+  color: #fff;
+}
+
+/* --- TIPOGRAFÍA GENERAL --- */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Cinzel", serif;
+  color: #c8a54e;
+  text-shadow: 0 0 6px rgba(200, 165, 78, 0.3);
+}
+
+p {
+  margin: 0 0 1rem 0;
+}
+
+/* --- LOGO --- */
+.logo {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.logo:hover {
+  transform: rotate(-10deg) scale(1.1);
+  box-shadow: 0 0 18px rgba(200, 165, 78, 0.8), inset 0 0 8px #b87333;
+}
+
+/* --- NAVBAR RESPONSIVA --- */
+.navbar-toggler {
+  border: 1px solid #b87333;
+  color: #c8a54e;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(200,165,78, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+.navbar-collapse.show ~ .btn-back-fixed {
+  display: none;
+}
+/* HERO / PORTADA PRINCIPAL */
+.hero {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.85)),
+    url("https://i.pinimg.com/originals/73/e1/88/73e188764c1fc7f71400723d8228e45c.gif");
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+
+  border-bottom: 3px solid #b87333;
+  padding: 2rem 1rem;
+}
+
+.hero-content {
+  max-width: 600px;
+  background: rgba(27, 27, 27, 0.6);
+  border: 1px solid rgba(184, 115, 51, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(200, 165, 78, 0.4);
+  padding: 2rem;
+}
+
+.hero h1 {
+  font-family: "Cinzel", serif;
+  color: #c8a54e;
+  text-shadow: 0 0 12px rgba(200, 165, 78, 0.7);
+}
+
+.hero p {
+  color: #e2e2e2;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.hero .btn-outline-light {
+  border-color: #c8a54e;
+  color: #c8a54e;
+  transition: all 0.3s ease;
+}
+.hero .btn-outline-light:hover {
+  background-color: #c8a54e;
+  color: #1a1a1a;
+  box-shadow: 0 0 10px rgba(200, 165, 78, 0.6);
+}
+
+/* PRODUCTOS Y TIENDA */
+.card {
+  background-color: #2b2b2b;
+  color: #f5f5f5;
+  border: 1px solid #3a3a3a;
+  border-radius: 12px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 10px rgba(200, 165, 78, 0.4);
+}
+.card-title {
+  color: #c8a54e;
+  font-weight: 700;
+}
+
+.btn-dark {
+  background-color: #b87333;
+  border: none;
+  color: #fff;
+}
+.btn-dark:hover {
+  background-color: #c68c45;
+}
+/* --- CARRITO MEJORADO --- */
+.cantidad-control button {
+  min-width: 32px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.cantidad-control button:hover {
+  background-color: #c8a54e;
+  color: #1a1a1a;
+  box-shadow: 0 0 6px rgba(200, 165, 78, 0.5);
+}
+
+.cantidad-control span {
+  color: #fff;
+  font-size: 1rem;
+}
+
+/* --- Botones generales --- */
+.btn-outline-light {
+  border-color: #c8a54e;
+  color: #c8a54e;
+}
+.btn-outline-light:hover {
+  background-color: #c8a54e;
+  color: #1a1a1a;
+}
+
+.product-detail,
+.catalogo,
+.about {
+  flex: 1;
+  min-height: calc(100vh - 180px); /* ajusta según el alto del header+footer */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* DETALLE DE PRODUCTO */
+.product-detail {
+  color: #f5f5f5;
+  background-color: #121212;
+  border-top: 2px solid #b87333;
+  border-bottom: 2px solid #b87333;
+  padding: 3rem 1rem;
+}
+
+.product-detail .btn-back-fixed {
+  z-index: 900; /* Menor que el menú (z-index del navbar ~1000 en Bootstrap) */
+}
+
+.product-title {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  color: #c8a54e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px rgba(200, 165, 78, 0.4);
+}
+
+.product-description {
+  font-size: 1.05rem;
+  color: #ccc;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.product-price {
+  color: #4caf50;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.product-stock {
+  color: #f5f5f5;
+}
+
+.product-image {
+  background: linear-gradient(145deg, #2b2b2b, #1a1a1a);
+  box-shadow: 0 0 12px rgba(184, 115, 51, 0.4);
+  border-radius: 10px;
+}
+
+.btn-add {
+  background-color: #b87333;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.btn-add:hover {
+  background-color: #c68c45;
+  color: #1a1a1a;
+  box-shadow: 0 0 10px rgba(200, 165, 78, 0.6);
+}
+
+.btn-outline-secondary {
+  color: #f5f5f5;
+  border-color: #555;
+}
+.btn-outline-secondary:hover {
+  background-color: #2b2b2b;
+  color: #c8a54e;
+  border-color: #c8a54e;
+}
+
+/* PANEL ADMIN */
+.crud-form {
+  background: #1a1a1a;
+  border: 1px solid #b87333;
+  box-shadow: 0 0 15px rgba(200, 165, 78, 0.3);
+  padding: 1.5rem;
+  border-radius: 10px;
+}
+
+.form-title {
+  font-family: "Cinzel", serif;
+  color: #c8a54e;
+  text-shadow: 0 0 6px rgba(200, 165, 78, 0.4);
+  font-weight: bold;
+}
+
+.crud-table table {
+  background-color: #2b2b2b;
+  color: #f5f5f5;
+  border: 1px solid #3a3a3a;
+}
+
+.crud-table th {
+  background-color: #1f1f1f;
+  color: #c8a54e;
+}
+
+.crud-table td {
+  vertical-align: middle;
+}
+
+.crud-form .form-control,
+.crud-form .form-select {
+  background-color: #2b2b2b;
+  color: #f5f5f5;
+  border: 1px solid #444;
+}
+.crud-form .form-control:focus {
+  border-color: #c8a54e;
+  box-shadow: 0 0 6px rgba(200, 165, 78, 0.6);
+}
+
+.crud-form .btn-add {
+  background-color: #b87333;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+}
+.crud-form .btn-add:hover {
+  background-color: #c68c45;
+  color: #1a1a1a;
+  box-shadow: 0 0 10px rgba(200, 165, 78, 0.6);
+}
+
+/* TOAST MENSAJE */
+.toast-message {
+  z-index: 2000;
+  animation: fadeInOut 2.5s ease forwards;
+}
+.toast-body {
+  background: rgba(27, 27, 27, 0.9);
+  color: #c8a54e;
+  border: 1px solid #b87333;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 0 10px rgba(200, 165, 78, 0.6);
+  font-weight: 600;
+  font-family: "Cinzel", serif;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* BOTÓN VOLVER ATRÁS */
+.btn-back {
+  background: rgba(27, 27, 27, 0.9);
+  color: #c8a54e;
+  border: 1px solid #b87333;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.4rem 1rem;
+  transition: all 0.3s ease;
+  font-family: "Cinzel", serif;
+}
+.btn-back:hover {
+  background-color: #c8a54e;
+  color: #1a1a1a;
+  box-shadow: 0 0 10px rgba(200, 165, 78, 0.7);
+}
+.btn-back-fixed {
+  position: fixed;
+  top: 90px;
+  left: 40px;
+  z-index: 1000;
+}
+/* --- CATÁLOGO --- */
+.catalogo {
+  background-color: #121212;
+  border-top: 2px solid #b87333;
+  border-bottom: 2px solid #b87333;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(200, 165, 78, 0.2);
+}
+
+.catalogo h2 {
+  font-family: "Cinzel", serif;
+  text-shadow: 0 0 8px rgba(200, 165, 78, 0.3);
+}
+
+.catalogo .form-control,
+.catalogo .form-select {
+  background-color: #2b2b2b;
+  color: #f5f5f5;
+  border: 1px solid #444;
+  border-radius: 8px;
+}
+.catalogo .form-control:focus,
+.catalogo .form-select:focus {
+  border-color: #c8a54e;
+  box-shadow: 0 0 5px rgba(200, 165, 78, 0.5);
+}
+
+.catalogo .card {
+  background-color: #1f1f1f;
+  color: #f5f5f5;
+  border: 1px solid #3a3a3a;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.catalogo .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 10px rgba(200, 165, 78, 0.4);
+}
+.catalogo .card-title {
+  color: #c8a54e;
+  font-family: "Cinzel", serif;
+}
+/* --- ACERCA DE --- */
+.about {
+  background-color: #121212;
+  border-top: 2px solid #b87333;
+  border-bottom: 2px solid #b87333;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(200, 165, 78, 0.2);
+  color: #f5f5f5;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.about h1 {
+  font-family: "Cinzel", serif;
+  text-shadow: 0 0 8px rgba(200, 165, 78, 0.4);
+}
+
+.about .btn {
+  font-family: "Cinzel", serif;
+}
+
+/* Versión modo claro */
+body.modo-luz .about {
+  background-color: #fff3d6;
+  color: #2a1a00;
+}
+body.modo-luz .about h1 {
+  color: #8a5500;
+}
+
+
+/* FOOTER */
+footer {
+  background: linear-gradient(90deg, #1f1f1f, #2a2a2a);
+  border-top: 2px solid #b87333;
+  color: #c8a54e;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: auto;
+}
+
+/* SCROLLBAR PERSONALIZADO */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #b87333;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c8a54e;
+}
+/* --- DISEÑO RESPONVISO --- */
+
+/* --- Tablets y pantallas medianas --- */
+@media (max-width: 992px) {
+  /* Hero */
+  .hero {
+    background-attachment: scroll;
+    padding: 2rem 1rem;
+  }
+  .hero-content {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  /* Navbar */
+  .navbar-nav {
+    background: linear-gradient(180deg, #1f1f1f, #2a2a2a);
+    border-top: 2px solid #b87333;
+    padding: 1rem 0;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .nav-link {
+    font-size: 1.1rem;
+    padding: 0.7rem 1rem;
+  }
+
+  .navbar-toggler:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(200, 165, 78, 0.6);
+  }
+
+  /* Hero texto más ajustado */
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+}
+
+/* --- Dispositivos móviles --- */
+@media (max-width: 768px) {
+  /* Productos */
+  .product-detail {
+    padding: 2rem 1rem;
+  }
+  .product-title {
+    font-size: 1.5rem;
+  }
+  .product-description {
+    font-size: 1rem;
+  }
+  .product-price {
+    font-size: 1.1rem;
+  }
+
+  /* Botón volver */
+  .btn-back-fixed {
+    top: 75px;
+    left: 15px;
+    font-size: 0.85rem;
+  }
+
+  /* Carrito */
+  .carrito table {
+    font-size: 0.9rem;
+  }
+  .carrito th:nth-child(1),
+  .carrito td:nth-child(1) {
+    display: none; /* oculta la imagen */
+  }
+  .cantidad-control button {
+    min-width: 28px;
+  }
+  .carrito h4 {
+    font-size: 1rem;
+  }
+
+  /* Catálogo */
+  .catalogo .form-control,
+  .catalogo .form-select {
+    font-size: 0.9rem;
+  }
+}
+
+/* --- Teléfonos muy pequeños --- */
+@media (max-width: 576px) {
+  .hero-content {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .navbar-brand {
+    font-size: 1rem;
+  }
+
+  .btn-toggle-tema {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* --- Ajustes generales flexibles --- */
+main {
+  flex: 1 0 auto;
+}
+body > * {
+  flex-shrink: 0;
+}
+@media (max-width: 992px) {
+  .navbar-collapse.show + .btn-back-fixed,
+  .btn-back-fixed.navbar-open {
+    display: none !important;
+  }
+}
+
+/* --- LOGIN PAGE --- */
+.login {
+  background-color: #121212;
+  border-top: 2px solid #b87333;
+  border-bottom: 2px solid #b87333;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(200, 165, 78, 0.3);
+  color: #f5f5f5;
+  min-height: 70vh;
+}
+
+.login h2 {
+  font-family: "Cinzel", serif;
+  text-shadow: 0 0 8px rgba(200, 165, 78, 0.4);
+}
+
+.login .btn {
+  font-family: "Cinzel", serif;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+body.modo-luz .login {
+  background-color: #fff3d6;
+  color: #2a1a00;
+}
+/* --- REGISTER PAGE --- */
+.register {
+  background-color: #121212;
+  border-top: 2px solid #b87333;
+  border-bottom: 2px solid #b87333;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(200, 165, 78, 0.3);
+  color: #f5f5f5;
+  min-height: 70vh;
+}
+
+.register h2 {
+  font-family: "Cinzel", serif;
+  text-shadow: 0 0 8px rgba(200, 165, 78, 0.4);
+}
+
+body.modo-luz .register {
+  background-color: #fff3d6;
+  color: #2a1a00;
+}
+/* --- TEXTOS MUTED / COLOR ACERO --- */
+.text-muted {
+  color: #b0b7c3 !important; /* tono acero claro */
+}
+
+body.modo-luz .text-muted {
+  color: #5a5a5a !important; /* gris oscuro para tema claro */
+}
+/* --- BOTÓN CERRAR SESIÓN (espada rota animada) --- */
+.btn-cerrar-sesion {
+  position: relative;
+  color: #ff6666 !important;
+  transition: all 0.3s ease;
+}
+
+.btn-cerrar-sesion:hover {
+  color: #ffffff !important;
+  text-shadow: 0 0 8px #ff4d4d;
+  transform: scale(1.05);
+}
+
+/* ✨ Animación de chispa / fragmentos metálicos */
+.btn-cerrar-sesion.animar-espada::after {
+  content: "💥";
+  position: absolute;
+  right: -10px;
+  top: -5px;
+  font-size: 1.2rem;
+  animation: chispa 0.8s ease-out forwards;
+}
+
+@keyframes chispa {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) rotate(0deg);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.4) rotate(25deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.2) rotate(-20deg) translateY(-15px);
+  }
+}
+/* --- ANIMACIÓN DE BIENVENIDA (efecto forja encendida) --- */
+.bienvenida-animada {
+  position: relative;
+  animation: brilloForja 2.2s ease-in-out;
+}
+
+@keyframes brilloForja {
+  0% {
+    text-shadow: 0 0 0 rgba(255, 200, 120, 0),
+                 0 0 0 rgba(255, 150, 50, 0);
+    color: #c8a54e;
+  }
+  25% {
+    text-shadow: 0 0 6px rgba(255, 200, 120, 0.9),
+                 0 0 18px rgba(255, 160, 60, 0.8),
+                 0 0 36px rgba(255, 120, 20, 0.5);
+    color: #ffd891;
+  }
+  60% {
+    text-shadow: 0 0 10px rgba(255, 200, 120, 0.8),
+                 0 0 25px rgba(255, 160, 60, 0.7);
+    color: #ffe4b1;
+  }
+  100% {
+    text-shadow: 0 0 6px rgba(200, 165, 78, 0.5);
+    color: #c8a54e;
+  }
+}
+/* --- TABLA CHECKOUT --- */
+.table-dark th {
+  color: #c8a54e;
+  border-bottom: 2px solid #b87333;
+  background-color: #1a1a1a;
+}
+
+.table-dark td {
+  background-color: #2b2b2b;
+  color: #f5f5f5;
+}
+
+.table-dark tr:hover td {
+  background-color: #2f2f2f;
+  box-shadow: inset 0 0 10px rgba(200, 165, 78, 0.3);
+}
+
+/* --- Mensajes y campos checkout --- */
+.crud-form label {
+  color: #c8a54e;
+  font-family: "Cinzel", serif;
+}
+
+.btn-outline-secondary {
+  color: #c8a54e;
+  border-color: #b87333;
+  transition: all 0.3s ease;
+}
+.btn-outline-secondary:hover {
+  background-color: #b87333;
+  color: #1a1a1a;
+  box-shadow: 0 0 8px rgba(200, 165, 78, 0.6);
+}
+
+.btn-secondary.disabled {
+  background: #444;
+  border: 1px solid #666;
+  color: #999;
+  cursor: not-allowed;
+  opacity: 0.8;
+  font-style: italic;
+}
+.toast-body {
+  background: rgba(27, 27, 27, 0.95);
+  color: #c8a54e;
+  border: 1px solid #b87333;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(200, 165, 78, 0.6);
+  font-family: "Cinzel", serif;
+  font-weight: 600;
+}
+footer {
+  background: linear-gradient(90deg, #1f1f1f, #2a2a2a);
+  border-top: 2px solid #b87333;
+  color: #c8a54e;
+  text-align: center;
+  padding: 1.5rem 0;
+  margin-top: auto;
+}
+
+footer .text-muted {
+  color: #a9a9a9 !important;
+}
+
+footer button.btn-toggle-tema {
+  font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
+}
