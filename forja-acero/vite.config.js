@@ -7,6 +7,7 @@ export default defineConfig({
       jsxRuntime: "automatic",
     }),
   ],
+  base: './',
   test: {
     environment: "jsdom",
     globals: true,
