@@ -9,14 +9,19 @@ export default function Checkout() {
   const [toast, setToast] = useState(null);
   const [usuario, setUsuario] = useState(null);
   const [carrito, setCarrito] = useState([]);
-
   const navigate = useNavigate();
 
-  // Simula un usuario logueado si no hay uno
+  // Helpers 🔧
+  const getCarritoKey = (correo) =>
+    correo ? `forja_acero_carrito_${correo}` : "forja_acero_carrito";
+  const getHistorialKey = (correo) =>
+    correo ? `forja_acero_historial_${correo}` : "forja_acero_historial";
+
+  // 🧩 Simula usuario si no hay uno (solo en desarrollo/test)
   useEffect(() => {
     const u = JSON.parse(localStorage.getItem("forja_acero_usuario"));
     if (!u) {
-      const mock = { nombre: "Test", correo: "test@test.com" };
+      const mock = { nombre: "Test", correo: "test@test.com", rol: "user" };
       localStorage.setItem("forja_acero_usuario", JSON.stringify(mock));
       setUsuario(mock);
       setCorreo(mock.correo);
@@ -26,41 +31,80 @@ export default function Checkout() {
     }
   }, []);
 
-  //Carga el carrito desde localStorage
+  // 🛒 Carga carrito del usuario activo
   useEffect(() => {
-    const guardado =
-      JSON.parse(localStorage.getItem("forja_acero_carrito")) || [];
+    if (!usuario?.correo) return;
+    const key = getCarritoKey(usuario.correo);
+    const guardado = JSON.parse(localStorage.getItem(key)) || [];
     setCarrito(guardado);
-  }, []);
+  }, [usuario]);
 
-  // Enviar compra
+  // 📣 Toast elegante
+  const mostrarToast = (mensaje) => {
+    setToast(mensaje);
+    setTimeout(() => setToast(null), 2000);
+  };
+
+  // 🧾 Confirmar compra
   const enviarCompra = (e) => {
     e.preventDefault();
 
-    // Validar campos
     if (!nombre.trim() || !correo.trim() || !direccion.trim()) {
-      setToast("⚠️ Completa todos los campos");
-      setTimeout(() => setToast(null), 2000);
+      mostrarToast("⚠️ Completa todos los campos");
       return;
     }
 
-    // Validar que el usuario esté logueado
     const usuario = JSON.parse(localStorage.getItem("forja_acero_usuario"));
     if (!usuario) {
-      setToast("⚠️ Debes iniciar sesión para continuar con tu compra");
-      setTimeout(() => setToast(null), 2000);
-      navigate("/failure");
+      mostrarToast("⚠️ Debes iniciar sesión para continuar con tu compra");
+      setTimeout(() => navigate("/failure"), 2000);
       return;
     }
 
-    // Vaciar carrito (el test espera "[]")
-    localStorage.setItem("forja_acero_carrito", "[]");
+    // 🔥 Descontar stock real al confirmar compra
+    const db = JSON.parse(localStorage.getItem("forja_acero_db"));
+    const productosDB = db.productos.map((p) => {
+      const comprado = carrito.find((c) => c.id === p.id);
+      if (comprado) {
+        const nuevoStock = Math.max(0, p.stock - comprado.cantidad);
+        return { ...p, stock: nuevoStock };
+      }
+      return p;
+    });
+    localStorage.setItem(
+      "forja_acero_db",
+      JSON.stringify({ productos: productosDB })
+    );
+
+    // 🪶 Guardar historial por usuario con dirección, método y estado inicial
+    const keyHistorial = getHistorialKey(usuario.correo);
+    const historial = JSON.parse(localStorage.getItem(keyHistorial)) || [];
+
+    const compra = {
+      id: Date.now(),
+      usuario: usuario.nombre,
+      correo: usuario.correo,
+      fecha: new Date().toLocaleString(),
+      direccion,
+      metodo,
+      estado: "pendiente", // Nuevo campo 🟡
+      total: carrito.reduce(
+        (acc, p) => acc + Number(p.precio || 0) * Number(p.cantidad || 1),
+        0
+      ),
+      productos: carrito,
+    };
+
+    historial.push(compra);
+    localStorage.setItem(keyHistorial, JSON.stringify(historial));
+
+    // 🧹 Vaciar carrito del usuario
+    const keyCarrito = getCarritoKey(usuario.correo);
+    localStorage.removeItem(keyCarrito);
     setCarrito([]);
 
-    // Mostrar éxito y redirigir
-    setToast("✅ Compra realizada con éxito");
+    mostrarToast("Procesando...");
     setTimeout(() => {
-      setToast(null);
       navigate("/success");
     }, 1500);
   };
@@ -80,9 +124,7 @@ export default function Checkout() {
 
       {carrito.length > 0 ? (
         <div className="mb-4">
-          <h5 className="text-center text-warning mb-3">
-            🛒 Resumen del carrito
-          </h5>
+          <h5 className="text-center text-warning mb-3">🛒 Resumen del carrito</h5>
           <ul className="list-group mb-3">
             {carrito.map((item, i) => (
               <li
@@ -90,13 +132,19 @@ export default function Checkout() {
                 className="list-group-item d-flex justify-content-between"
               >
                 <span>{item.nombre}</span>
-                <strong>{Number(item.precio) || 0} 🪙</strong>
+                <strong>
+                  {(Number(item.precio) || 0) * (Number(item.cantidad) || 1)} 
+                </strong>
               </li>
             ))}
           </ul>
           <h5 className="text-center text-muted">
-            Total:{" "}
-            {carrito.reduce((acc, it) => acc + (Number(it.precio) || 0), 0)} 🪙
+            Total: ${" "}
+            {carrito.reduce(
+              (acc, it) =>
+                acc + (Number(it.precio) || 0) * (Number(it.cantidad) || 1),
+              0
+            )}{" "}
           </h5>
         </div>
       ) : (

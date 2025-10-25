@@ -823,3 +823,174 @@ footer button.btn-toggle-tema {
   font-size: 0.9rem;
   padding: 0.4rem 0.8rem;
 }
+
+.boton-detalle {
+  transition: all 0.3s ease-in-out;
+  border-color: #c8a54e;
+  color: #c8a54e;
+}
+
+.boton-detalle:hover {
+  background-color: #c8a54e;
+  color: #1a1a1a;
+  box-shadow: 0 0 10px #c8a54e;
+  transform: scale(1.05);
+}
+
+/* --- MEJORAS DE RESPONSIVIDAD Y CONSISTENCIA --- */
+
+/* Laptops pequeñas (1200px o menos) */
+@media (max-width: 1200px) {
+  .hero h1 {
+    font-size: 2.4rem;
+  }
+  .hero-content {
+    max-width: 500px;
+  }
+  .crud-form, .about, .catalogo {
+    padding: 1.5rem;
+  }
+}
+
+/* Móviles medianos (600px o menos) */
+@media (max-width: 600px) {
+  .crud-form, .about, .catalogo {
+    padding: 1rem;
+  }
+
+  /* Tablas scrollables */
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .table-dark th,
+  .table-dark td {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+
+  /* Hero */
+  .hero {
+    background-attachment: scroll !important;
+    background-position: center;
+    padding: 1.5rem 1rem;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  /* Botones */
+  .btn-add,
+  .btn-outline-secondary {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+  }
+
+  /* Formularios */
+  input, select, textarea {
+    font-size: 0.9rem;
+  }
+
+  /* Evitar textos muy grandes */
+  h1, h2, h3 {
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
+  }
+
+  /* Ajuste carrito */
+  .carrito h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Muy pequeños (400px o menos) */
+@media (max-width: 400px) {
+  .hero-content {
+    padding: 0.8rem;
+  }
+
+  .btn-toggle-tema {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .navbar-brand {
+    font-size: 0.9rem;
+  }
+
+  .carrito h2,
+  .product-title {
+    font-size: 1.2rem;
+  }
+}
+
+/* --- Ajustes visuales menores --- */
+.hero p {
+  color: rgba(240, 240, 240, 0.9);
+}
+
+body.modo-luz .hero p {
+  color: #3a2a00;
+}
+
+body.modo-luz .carrito {
+  color: #2a1a00;
+}
+
+.crud-form input::placeholder {
+  color: #aaa;
+  opacity: 0.8;
+}
+
+/* Hover unificado para todos los botones de acción */
+.btn:hover {
+  transform: translateY(-1px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* --- Hero texto central adaptable --- */
+.hero-content {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* --- MENSAJE DE ACTUALIZACIÓN DE PERFIL (estilo forja dorada) --- */
+.mensaje-actualizacion {
+  position: center;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(27, 27, 27, 0.95);
+  color: #c8a54e;
+  border: 1px solid #b87333;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 0 10px rgba(200, 165, 78, 0.6);
+  font-family: "Cinzel", serif;
+  font-weight: 600;
+  text-align: center;
+  z-index: 2000;
+  animation: fadeInOut 2.5s ease forwards;
+}
+
+/* Reutiliza la animación de los toast */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}

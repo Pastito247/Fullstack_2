@@ -21,23 +21,6 @@ export default function Navbar() {
   const toggleMenu = () => setMenuAbierto(!menuAbierto);
   const cerrarMenu = () => setMenuAbierto(false);
 
-  // Cerrar sesión con animación y recarga
-  const cerrarSesion = () => {
-    const btn = document.querySelector(".btn-cerrar-sesion");
-    if (btn) {
-      btn.classList.add("animar-espada");
-      setTimeout(() => {
-        localStorage.removeItem("forja_acero_usuario");
-        navigate("/");
-        window.location.reload();
-      }, 900);
-    } else {
-      localStorage.removeItem("forja_acero_usuario");
-      navigate("/");
-      window.location.reload();
-    }
-  };
-
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-warning">
       <div className="container">
@@ -71,6 +54,7 @@ export default function Navbar() {
           id="navbarNav"
         >
           <ul className="navbar-nav ms-auto text-center">
+            {/* Enlaces base */}
             <li className="nav-item">
               <Link className="nav-link" to="/" onClick={cerrarMenu}>
                 Inicio
@@ -83,6 +67,7 @@ export default function Navbar() {
               </Link>
             </li>
 
+            {/* Carrito solo para compradores */}
             {usuario?.rol === "comprador" && (
               <li className="nav-item">
                 <Link className="nav-link" to="/carrito" onClick={cerrarMenu}>
@@ -91,6 +76,7 @@ export default function Navbar() {
               </li>
             )}
 
+            {/* Panel administrador */}
             {usuario?.rol === "admin" && (
               <li className="nav-item">
                 <Link className="nav-link" to="/admin" onClick={cerrarMenu}>
@@ -105,7 +91,7 @@ export default function Navbar() {
               </Link>
             </li>
 
-            {/* Si no hay sesión */}
+            {/* Sin sesión */}
             {!usuario && (
               <>
                 <li className="nav-item">
@@ -125,7 +111,7 @@ export default function Navbar() {
               </>
             )}
 
-            {/* Si hay sesión */}
+            {/* Con sesión */}
             {usuario && (
               <>
                 <li className="nav-item d-flex align-items-center justify-content-center">
@@ -140,31 +126,27 @@ export default function Navbar() {
                     {usuario.nombre?.split(" ")[0] || "Aventurero"}
                   </span>
                 </li>
+
+                {/* Solo comprador puede ver historial */}
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link"
+                      to="/historial"
+                      onClick={cerrarMenu}
+                    >
+                      Historial
+                    </Link>
+                  </li>
+
+                {/* Nuevo enlace de perfil */}
                 <li className="nav-item">
                   <Link
                     className="nav-link"
-                    to="/historial"
+                    to="/perfil"
                     onClick={cerrarMenu}
                   >
-                    Historial
+                    Perfil
                   </Link>
-                </li>
-
-                <li className="nav-item">
-                  <button
-                    className="nav-link btn btn-link text-danger fw-bold btn-cerrar-sesion"
-                    onClick={cerrarSesion}
-                    style={{
-                      textDecoration: "none",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "6px",
-                      fontFamily: "Cinzel, serif",
-                    }}
-                  >
-                    🗡️ Cerrar sesión
-                  </button>
                 </li>
               </>
             )}
