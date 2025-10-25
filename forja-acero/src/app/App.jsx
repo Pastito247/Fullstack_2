@@ -6,6 +6,7 @@ import "../styles/main.css";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Profile from "./pages/Profile";
 import React from "react";
 
 // Páginas de tienda
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/success" element={<Success />} />
           <Route path="/failure" element={<Failure />} />
+          <Route path="/perfil" element={<Profile />} />
           <Route path="/catalogo" element={<Catalogo />} />
           <Route path="/admin" element={<Dashboard />} />
           <Route path="*" element={<Navigate to="/" />} />

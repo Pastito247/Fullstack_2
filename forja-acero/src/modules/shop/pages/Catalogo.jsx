@@ -1,24 +1,33 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import { repo } from "../../../data/repo"
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { repo } from "../../../data/repo";
 import React from "react";
 
 export default function Catalogo() {
-  const [busqueda, setBusqueda] = useState("")
-  const [categoria, setCategoria] = useState("todos")
+  const [busqueda, setBusqueda] = useState("");
+  const [categoria, setCategoria] = useState("todos");
+  const [usuario, setUsuario] = useState(null);
+  const [productos, setProductos] = useState([]);
 
-const productos = repo.listProductos() || []
+  // Cargar productos y usuario al montar
+  useEffect(() => {
+    setProductos(repo.listProductos() || []);
+    const user = JSON.parse(localStorage.getItem("forja_acero_usuario"));
+    setUsuario(user);
+  }, []);
 
   const categorias = [
     "todos",
     ...new Set(productos.map((p) => p.categoria).filter(Boolean)),
-  ]
+  ];
 
   const filtrados = productos.filter((p) => {
-    const coincideNombre = p.nombre.toLowerCase().includes(busqueda.toLowerCase())
-    const coincideCategoria = categoria === "todos" || p.categoria === categoria
-    return coincideNombre && coincideCategoria
-  })
+    const coincideNombre = p.nombre.toLowerCase().includes(busqueda.toLowerCase());
+    const coincideCategoria = categoria === "todos" || p.categoria === categoria;
+    return coincideNombre && coincideCategoria;
+  });
+
+  const esAdmin = usuario?.rol === "admin";
 
   return (
     <div className="catalogo container py-5">
@@ -53,30 +62,52 @@ const productos = repo.listProductos() || []
       {/* Productos */}
       <div className="row g-4 justify-content-center">
         {filtrados.length > 0 ? (
-          filtrados.map((p) => (
-            <div key={p.id} className="col-sm-6 col-md-4 col-lg-3">
-              <div className="card h-100 text-center border-dark">
-                <img
-                  src={p.imagen}
-                  alt={p.nombre}
-                  className="card-img-top"
-                  style={{
-                    height: "220px",
-                    objectFit: "cover",
-                    borderBottom: "1px solid #b87333",
-                  }}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{p.nombre}</h5>
-                  <p className="text-warning mb-1">${p.precio}</p>
-                  <p className="small text-muted">{p.categoria}</p>
-                  <Link to={`/producto/${p.id}`} className="btn btn-add btn-sm">
-                    Ver detalle
-                  </Link>
+          filtrados.map((p) => {
+            const sinStock = p.stock <= 0;
+            return (
+              <div key={p.id} className="col-sm-6 col-md-4 col-lg-3">
+                <div className="card h-100 text-center border-dark">
+                  <img
+                    src={p.imagen}
+                    alt={p.nombre}
+                    className="card-img-top"
+                    style={{
+                      height: "220px",
+                      objectFit: "cover",
+                      borderBottom: "1px solid #b87333",
+                    }}
+                  />
+                  <div className="card-body d-flex flex-column justify-content-between">
+                    <div>
+                      <h5 className="card-title">{p.nombre}</h5>
+                      <p className="text-warning mb-1">${p.precio}</p>
+                      <p className="small text-muted">{p.categoria}</p>
+                      <p className="small">
+                        <strong>Stock:</strong>{" "}
+                        <span
+                          className={
+                            sinStock
+                              ? "text-danger"
+                              : p.stock < 5
+                              ? "text-warning"
+                              : "text-success"
+                          }
+                        >
+                          {p.stock}
+                        </span>
+                      </p>
+                    </div>
+
+                    <div className="mt-2">
+                      <Link to={`/producto/${p.id}`} className="btn btn-sm btn-outline-warning me-2">
+                        Ver detalle
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
+            );
+          })
         ) : (
           <p className="text-center text-muted mt-4">
             No se encontraron productos que coincidan con tu búsqueda.
@@ -84,5 +115,5 @@ const productos = repo.listProductos() || []
         )}
       </div>
     </div>
-  )
+  );
 }

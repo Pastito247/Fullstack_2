@@ -19,42 +19,42 @@ function save(data) {
   localStorage.setItem(KEY, JSON.stringify(data))
 }
 
-// Obtener toda la base
-function getDB() {
-  return load()
-}
-
 // CRUD completo
 export const repo = {
+  // ✅ Permitir obtener toda la base
+  getDB() {
+    return load()
+  },
+
   // Listar todos los productos
   listProductos() {
-    const { productos } = getDB()
+    const { productos } = load()
     return productos
   },
 
   // Buscar producto por ID
   getProducto(id) {
-    const { productos } = getDB()
+    const { productos } = load()
     return productos.find(p => p.id === id)
   },
 
   // Agregar nuevo producto
   addProducto(producto) {
-    const db = getDB()
+    const db = load()
     db.productos.push(producto)
     save(db)
   },
 
   // Editar producto existente
   updateProducto(id, cambios) {
-    const db = getDB()
+    const db = load()
     db.productos = db.productos.map(p => p.id === id ? { ...p, ...cambios } : p)
     save(db)
   },
 
   // Eliminar producto
   deleteProducto(id) {
-    const db = getDB()
+    const db = load()
     db.productos = db.productos.filter(p => p.id !== id)
     save(db)
   }

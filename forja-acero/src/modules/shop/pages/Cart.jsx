@@ -9,53 +9,88 @@ export default function Carrito() {
   const isFirstRender = useRef(true);
   const navigate = useNavigate();
 
+  // Helpers para claves por usuario
+  const getCarritoKey = (correo) =>
+    correo ? `forja_acero_carrito_${correo}` : "forja_acero_carrito";
+
   // Cargar datos del carrito y usuario
   useEffect(() => {
-    const guardado = JSON.parse(localStorage.getItem("forja_acero_carrito")) || [];
-    const conCantidad = guardado.map((p) => ({
-      ...p,
-      cantidad: p.cantidad || 1,
-    }));
-    setCarrito(conCantidad);
-
     const user = JSON.parse(localStorage.getItem("forja_acero_usuario"));
     setUsuario(user);
+
+    const key = getCarritoKey(user?.correo);
+    const guardado = JSON.parse(localStorage.getItem(key)) || [];
+
+    // Fusionar duplicados
+    const mapa = new Map();
+    for (const item of guardado) {
+      const cantidad = item.cantidad ? Number(item.cantidad) : 1;
+      if (mapa.has(item.id)) {
+        const previo = mapa.get(item.id);
+        mapa.set(item.id, { ...previo, cantidad: previo.cantidad + cantidad });
+      } else {
+        mapa.set(item.id, { ...item, cantidad });
+      }
+    }
+    setCarrito(Array.from(mapa.values()));
   }, []);
 
-  // Guardar carrito en localStorage cuando cambie
+  // Guardar carrito del usuario cuando cambie
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
-    localStorage.setItem("forja_acero_carrito", JSON.stringify(carrito));
-  }, [carrito]);
+    if (!usuario) return;
+    const key = getCarritoKey(usuario.correo);
+    localStorage.setItem(key, JSON.stringify(carrito));
+  }, [carrito, usuario]);
 
-  // Toast elegante
+  // Mostrar toast elegante
   const mostrarToast = (mensaje) => {
     setToast(mensaje);
     setTimeout(() => setToast(null), 2500);
   };
 
-  // Funciones CRUD del carrito
+  // Cambiar cantidad (sin tocar stock aún)
   const cambiarCantidad = (id, delta) => {
     setCarrito((prev) =>
       prev
-        .map((p) =>
-          p.id === id ? { ...p, cantidad: Math.max(0, p.cantidad + delta) } : p
-        )
-        .filter((p) => p.cantidad > 0)
+        .map((p) => {
+          if (p.id !== id) return p;
+
+          const nueva = p.cantidad + delta;
+          if (nueva < 1) {
+            return null;
+          }
+
+          // Evita superar el stock
+          if (nueva > p.stock) {
+            mostrarToast("⚠️ No puedes agregar más de lo disponible en stock");
+            return p;
+          }
+
+          return { ...p, cantidad: nueva };
+        })
+        .filter(Boolean)
     );
   };
 
+  // Eliminar producto
   const eliminarProducto = (id) => {
     setCarrito((prev) => prev.filter((p) => p.id !== id));
-    mostrarToast("🗡️ Producto eliminado");
+    mostrarToast("🗡️ Producto eliminado del carrito");
   };
 
+  // Vaciar carrito
   const vaciarCarrito = () => {
     setCarrito([]);
-    localStorage.removeItem("forja_acero_carrito");
+    if (usuario) {
+      const key = getCarritoKey(usuario.correo);
+      localStorage.removeItem(key);
+    } else {
+      localStorage.removeItem("forja_acero_carrito");
+    }
     mostrarToast("⚔️ Carrito vaciado");
   };
 
@@ -85,7 +120,7 @@ export default function Carrito() {
     <div className="carrito container py-5">
       <h2 className="text-center text-warning mb-4">🛒 Tu Carrito</h2>
 
-      {/* Toast message */}
+      {/* Toast */}
       {toast && (
         <div
           className="toast-message position-fixed top-0 start-50 translate-middle-x mt-4"
@@ -104,7 +139,7 @@ export default function Carrito() {
         </div>
       ) : (
         <>
-          {/* 🧾 Tabla del carrito */}
+          {/* Tabla */}
           <div className="table-responsive">
             <table className="table table-dark align-middle text-center">
               <thead>
@@ -119,7 +154,7 @@ export default function Carrito() {
               </thead>
               <tbody>
                 {carrito.map((p) => (
-                  <tr key={p.id}>
+                  <tr key={`${p.id}-${p.cantidad}`}>
                     <td>
                       <img
                         src={p.imagen}
@@ -171,7 +206,7 @@ export default function Carrito() {
             <h4>Total: ${total}</h4>
           </div>
 
-          {/* 🔘 Botones de acción */}
+          {/* Botones */}
           <div className="d-flex justify-content-between flex-wrap mt-4 gap-3">
             <button className="btn btn-outline-danger" onClick={vaciarCarrito}>
               Vaciar carrito
@@ -181,7 +216,6 @@ export default function Carrito() {
               Seguir comprando
             </Link>
 
-            {/* Botón condicional */}
             {usuario ? (
               <button className="btn btn-add" onClick={irAlCheckout}>
                 Finalizar compra
@@ -189,7 +223,6 @@ export default function Carrito() {
             ) : (
               <button
                 className="btn btn-secondary disabled"
-                onClick={() => mostrarToast("⚠️ Inicia sesión para comprar")}
                 title="Debes iniciar sesión para finalizar tu compra"
               >
                 Inicia sesión para comprar
