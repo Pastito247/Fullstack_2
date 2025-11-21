@@ -6,6 +6,9 @@ import com.fullstack2.backend.repository.CampaignRepository;
 import com.fullstack2.backend.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import com.fullstack2.backend.entity.Role;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 import java.security.SecureRandom;
 import java.util.Base64;
@@ -18,18 +21,18 @@ public class CampaignService {
     private final UserRepository userRepository;
 
     public CampaignService(CampaignRepository campaignRepository,
-                           UserRepository userRepository) {
+            UserRepository userRepository) {
         this.campaignRepository = campaignRepository;
         this.userRepository = userRepository;
     }
 
     private User getCurrentUser() {
-        String username = SecurityContextHolder.getContext()
+        String email = SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getName();
 
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + username));
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + email));
     }
 
     private String generateInviteCode() {
@@ -74,4 +77,22 @@ public class CampaignService {
 
         return campaignRepository.save(campaign);
     }
+
+    // 🔹 Eliminar campaña (solo DM dueño o ADMIN)
+    public void deleteCampaign(Long id) {
+        User current = getCurrentUser();
+
+        Campaign campaign = campaignRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Campaña no encontrada"));
+
+        boolean isDmOwner = campaign.getDm().getId().equals(current.getId());
+        boolean isAdmin = current.getRole() == Role.ADMIN;
+
+        if (!isDmOwner && !isAdmin) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No tienes permisos para eliminar esta campaña");
+        }
+
+        campaignRepository.delete(campaign);
+    }
+
 }

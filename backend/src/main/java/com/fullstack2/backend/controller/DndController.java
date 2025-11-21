@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/dnd")
+@RequestMapping("/api/v1/dnd")
 @CrossOrigin(origins = "*")
 public class DndController {
 

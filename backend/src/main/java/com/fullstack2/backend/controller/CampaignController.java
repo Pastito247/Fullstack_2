@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/campaigns")
+@RequestMapping("/api/v1/campaigns")
 public class CampaignController {
 
         private final CampaignService campaignService;
@@ -22,6 +22,7 @@ public class CampaignController {
 
         // Crear campaña (por ahora cualquier usuario logueado,
         // luego si quieres lo restringimos a ROLE_DM)
+        @PreAuthorize("hasRole('DM') or hasRole('ADMIN')")
         @PostMapping
         public ResponseEntity<CampaignResponse> createCampaign(
                         @RequestBody CampaignCreateRequest request) {
@@ -87,6 +88,13 @@ public class CampaignController {
                                 .build();
 
                 return ResponseEntity.ok(response);
+        }
+
+        @PreAuthorize("hasRole('ADMIN')")
+        @DeleteMapping("/{id}")
+        public ResponseEntity<Void> deleteCampaign(@PathVariable Long id) {
+                campaignService.deleteCampaign(id);
+                return ResponseEntity.noContent().build();
         }
 
 }

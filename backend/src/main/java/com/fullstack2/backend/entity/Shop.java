@@ -1,5 +1,7 @@
 package com.fullstack2.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,5 +21,6 @@ public class Shop {
 
     @ManyToOne
     @JoinColumn(name = "campaign_id")
+    @JsonIgnore
     private Campaign campaign;
 }

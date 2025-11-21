@@ -20,20 +20,20 @@ public class CharacterService {
     private final UserRepository userRepository;
 
     public CharacterService(CharacterRepository characterRepository,
-                            CampaignRepository campaignRepository,
-                            UserRepository userRepository) {
+            CampaignRepository campaignRepository,
+            UserRepository userRepository) {
         this.characterRepository = characterRepository;
         this.campaignRepository = campaignRepository;
         this.userRepository = userRepository;
     }
 
     private User getCurrentUser() {
-        String username = SecurityContextHolder.getContext()
+        String email = SecurityContextHolder.getContext()
                 .getAuthentication()
-                .getName();
+                .getName(); // aquí viene el email desde el JWT
 
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + username));
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + email));
     }
 
     // Crear personaje dentro de una campaña (solo DM de la campaña)
@@ -112,4 +112,11 @@ public class CharacterService {
         character.setPlayer(player);
         return characterRepository.save(character);
     }
+
+    // 🔹 Listar personajes del jugador actualmente autenticado
+    public List<CharacterEntity> getCharactersOfCurrentPlayer() {
+        User current = getCurrentUser();
+        return characterRepository.findByPlayer(current);
+    }
+
 }
