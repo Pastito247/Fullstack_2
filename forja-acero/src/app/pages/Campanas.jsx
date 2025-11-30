@@ -1,3 +1,4 @@
+// src/app/pages/Campanas.jsx
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import apiClient from "../../api/apiClient";
@@ -24,6 +25,8 @@ export default function Campanas() {
   };
 
   const cargarCampanas = async () => {
+    if (!user) return;
+
     setLoading(true);
     setError("");
     try {
@@ -53,7 +56,6 @@ export default function Campanas() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  // Unirse por código (Player)
   const handleJoin = async (e) => {
     e.preventDefault();
     setError("");
@@ -87,7 +89,6 @@ export default function Campanas() {
 
   return (
     <div className="container py-5">
-      {/* Mensajes arriba */}
       {(error || infoMessage) && (
         <div className="mb-3">
           {error && (
@@ -103,7 +104,7 @@ export default function Campanas() {
         </div>
       )}
 
-      {/* Sección DM: Mis campañas */}
+      {/* DM: Mis campañas */}
       {esDM && (
         <>
           <h1 className="mb-4 text-center">Mis campañas</h1>
@@ -125,20 +126,27 @@ export default function Campanas() {
                     onClick={() => irADetalle(c.id)}
                   >
                     <div className="card-body d-flex flex-column align-items-center">
-                      {/* IMG cuadrada */}
                       <div
-                        className="mb-3 d-flex align-items-center justify-content-center"
+                        className="d-flex align-items-center justify-content-center mb-2"
                         style={{
                           width: "140px",
                           height: "140px",
                           border: "3px solid #ffffff",
                           borderRadius: "4px",
+                          overflow: "hidden",
                         }}
                       >
-                        {/* Más adelante: usar c.imageUrl si lo agregamos */}
-                        <span className="text-muted small">IMG</span>
+                        {c.imageUrl ? (
+                          <img
+                            src={c.imageUrl}
+                            alt={c.name}
+                            className="img-fluid h-100 w-100 object-fit-cover"
+                          />
+                        ) : (
+                          <span className="text-muted small">IMG</span>
+                        )}
                       </div>
-                      {/* Nombre */}
+
                       <h5 className="card-title text-center mb-0">{c.name}</h5>
                     </div>
                   </div>
@@ -147,7 +155,6 @@ export default function Campanas() {
             </div>
           )}
 
-          {/* Botón CREAR CAMPAÑA centrado */}
           <div className="text-center mt-3 mb-5">
             <button className="btn btn-add px-4" onClick={irACrearCampana}>
               CREAR CAMPAÑA
@@ -156,16 +163,14 @@ export default function Campanas() {
         </>
       )}
 
-      {/* Separador si el usuario es DM y Player (poco probable) */}
       {esDM && esPlayer && <hr className="my-4" />}
 
-      {/* Sección Player: Unirse + campañas donde participa */}
+      {/* Player: campañas donde participa */}
       {esPlayer && (
         <>
           <h2 className="h4 mb-3">Campañas donde participas</h2>
 
-          {/* Form para unirse por código */}
-          <div className="card mb-4">
+          <div className="card bg-dark text-light border-light mb-4">
             <div className="card-body">
               <h5 className="card-title">Unirse a una campaña</h5>
               <form onSubmit={handleJoin}>
@@ -193,38 +198,56 @@ export default function Campanas() {
             </div>
           </div>
 
-          {/* Lista de campañas del player */}
-          <div className="card">
-            <div className="card-body">
-              {loading ? (
-                <p>Cargando campañas...</p>
-              ) : playerCampaigns.length === 0 ? (
-                <p className="text-muted">
-                  Aún no estás unido a ninguna campaña.
-                </p>
-              ) : (
-                <ul className="list-group list-group-flush">
-                  {playerCampaigns.map((c) => (
-                    <li
-                      key={c.id}
-                      className="list-group-item bg-dark text-light"
-                    >
-                      <div>
-                        <strong>{c.name}</strong>
-                        <p className="mb-1 small text-muted">
-                          {c.description}
-                        </p>
-                        <p className="mb-0 small">
-                          Dungeon Master:{" "}
-                          <span className="fw-bold">{c.dmUsername}</span>
-                        </p>
+          {loading ? (
+            <p>Cargando campañas...</p>
+          ) : playerCampaigns.length === 0 ? (
+            <p className="text-muted">
+              Aún no estás unido a ninguna campaña.
+            </p>
+          ) : (
+            <div className="row g-4 justify-content-start">
+              {playerCampaigns.map((c) => (
+                <div
+                  key={c.id}
+                  className="col-12 col-sm-6 col-md-4 d-flex justify-content-center"
+                >
+                  <div
+                    className="card bg-dark text-light border-light campaign-card"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => irADetalle(c.id)}
+                  >
+                    <div className="card-body d-flex flex-column align-items-center">
+                      <div
+                        className="d-flex align-items-center justify-content-center mb-2"
+                        style={{
+                          width: "140px",
+                          height: "140px",
+                          border: "3px solid #ffffff",
+                          borderRadius: "4px",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {c.imageUrl ? (
+                          <img
+                            src={c.imageUrl}
+                            alt={c.name}
+                            className="img-fluid h-100 w-100 object-fit-cover"
+                          />
+                        ) : (
+                          <span className="text-muted small">IMG</span>
+                        )}
                       </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
+
+                      <h5 className="card-title text-center mb-1">{c.name}</h5>
+                      <p className="mb-0 small text-muted text-center">
+                        DM: <strong>{c.dmUsername}</strong>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          </div>
+          )}
         </>
       )}
 

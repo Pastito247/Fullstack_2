@@ -63,12 +63,13 @@ export default function Navbar() {
             </li>
 
             {/* Personajes */}
+            {user && user.role === "PLAYER" && (
             <li className="nav-item">
               <Link className="nav-link" to="/personajes" onClick={cerrarMenu}>
                 Personajes
               </Link>
             </li>
-
+            )}
             {/* Perfil / Auth */}
             {!user && (
               <>

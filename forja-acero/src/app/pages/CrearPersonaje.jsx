@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import apiClient from "../../api/apiClient";
 
@@ -6,12 +6,13 @@ export default function CrearPersonaje() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Si venimos desde /campanas/:id con ?campaignId=123
+  // campaignId viene en la URL: /personajes/crear?campaignId=123
   const searchParams = new URLSearchParams(location.search);
   const preselectedCampaignId = searchParams.get("campaignId");
 
-  const [campaigns, setCampaigns] = useState([]);
   const [campaignId, setCampaignId] = useState(preselectedCampaignId || "");
+  const [campaign, setCampaign] = useState(null);
+  const [loadingCampaign, setLoadingCampaign] = useState(true);
 
   const [name, setName] = useState("");
   const [dndClass, setDndClass] = useState("");
@@ -19,7 +20,11 @@ export default function CrearPersonaje() {
   const [level, setLevel] = useState(1);
   const [npc, setNpc] = useState(false);
   const [playerUsername, setPlayerUsername] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+
+  // Imagen subida (base64)
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const fileInputRef = useRef(null);
 
   // Dinero DnD
   const [pp, setPp] = useState(0);
@@ -29,7 +34,6 @@ export default function CrearPersonaje() {
   const [cp, setCp] = useState(0);
 
   const [loading, setLoading] = useState(false);
-  const [loadingCampaigns, setLoadingCampaigns] = useState(true);
   const [error, setError] = useState("");
   const [info, setInfo] = useState("");
 
@@ -41,30 +45,53 @@ export default function CrearPersonaje() {
     }
   };
 
-  // Cargar campañas del DM
-  const cargarCampanasDm = async () => {
-    setLoadingCampaigns(true);
+  // Cargar datos de la campaña (solo la campaña actual)
+  const cargarCampana = async () => {
     setError("");
-    try {
-      const res = await apiClient.get("/api/v1/campaigns/mine");
-      const data = res.data || [];
-      setCampaigns(data);
+    if (!preselectedCampaignId) {
+      setCampaign(null);
+      setCampaignId("");
+      setLoadingCampaign(false);
+      setError("No se especificó una campaña para crear el personaje.");
+      return;
+    }
 
-      if (!preselectedCampaignId && data.length > 0) {
-        setCampaignId(data[0].id.toString());
-      }
+    try {
+      setLoadingCampaign(true);
+      const res = await apiClient.get(`/api/v1/campaigns/${preselectedCampaignId}`);
+      setCampaign(res.data);
+      setCampaignId(preselectedCampaignId);
     } catch (err) {
       console.error(err);
-      setError("No se pudieron cargar tus campañas. Crea una campaña primero.");
+      setError("No se pudo cargar la campaña. Intenta desde el detalle de la campaña.");
     } finally {
-      setLoadingCampaigns(false);
+      setLoadingCampaign(false);
     }
   };
 
   useEffect(() => {
-    cargarCampanasDm();
+    cargarCampana();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleSelectImageClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setImageFile(file);
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      setImagePreview(ev.target.result); // data URL base64
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -76,7 +103,7 @@ export default function CrearPersonaje() {
       return;
     }
 
-    // Coincide 100% con tu CharacterCreateRequest
+    // Coincide con CharacterCreateRequest
     const payload = {
       campaignId: Number(campaignId),
       name: name.trim(),
@@ -84,7 +111,7 @@ export default function CrearPersonaje() {
       race: race.trim(),
       level: Number(level) || 1,
       npc: npc,
-      imageUrl: imageUrl.trim(),
+      imageUrl: imagePreview || null, // 🔥 ahora usamos la imagen subida
       playerUsername: playerUsername.trim(),
       pp: Number(pp) || 0,
       gp: Number(gp) || 0,
@@ -96,11 +123,7 @@ export default function CrearPersonaje() {
     try {
       setLoading(true);
 
-      // 👇 AQUÍ el cambio importante:
-      await apiClient.post(
-        `/api/characters/campaign/${campaignId}`,
-        payload
-      );
+      await apiClient.post(`/api/characters/campaign/${campaignId}`, payload);
 
       setInfo("Personaje creado correctamente.");
 
@@ -111,7 +134,8 @@ export default function CrearPersonaje() {
       setLevel(1);
       setNpc(false);
       setPlayerUsername("");
-      setImageUrl("");
+      setImagePreview(null);
+      setImageFile(null);
       setPp(0);
       setGp(0);
       setEp(0);
@@ -159,28 +183,27 @@ export default function CrearPersonaje() {
             <div className="card-body">
               <h5 className="card-title mb-4">Datos del personaje</h5>
 
-              {loadingCampaigns ? (
-                <p>Cargando campañas...</p>
-              ) : campaigns.length === 0 ? (
+              {loadingCampaign ? (
+                <p>Cargando campaña...</p>
+              ) : !campaign ? (
                 <p className="text-muted">
-                  No tienes campañas creadas. Debes crear una campaña antes de
-                  crear personajes.
+                  No se pudo cargar la campaña. Vuelve al listado y entra desde
+                  el detalle de una campaña.
                 </p>
               ) : (
                 <form onSubmit={handleSubmit}>
+                  {/* Campaña fija, solo lectura */}
                   <div className="mb-3">
-                    <label className="form-label">*Campaña</label>
-                    <select
-                      className="form-select"
-                      value={campaignId}
-                      onChange={(e) => setCampaignId(e.target.value)}
-                    >
-                      {campaigns.map((c) => (
-                        <option key={c.id} value={c.id}>
-                          {c.name}
-                        </option>
-                      ))}
-                    </select>
+                    <label className="form-label">Campaña</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={campaign.name}
+                      disabled
+                    />
+                    <small className="text-muted">
+                      El personaje se creará en esta campaña.
+                    </small>
                   </div>
 
                   <div className="mb-3">
@@ -252,21 +275,10 @@ export default function CrearPersonaje() {
                     />
                   </div>
 
-                  <div className="mb-3">
-                    <label className="form-label">URL de imagen</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="https://..."
-                      value={imageUrl}
-                      onChange={(e) => setImageUrl(e.target.value)}
-                    />
-                  </div>
-
                   <button
                     type="submit"
                     className="btn btn-add mt-2"
-                    disabled={loading || campaigns.length === 0}
+                    disabled={loading || !campaign}
                   >
                     {loading ? "Creando..." : "Crear personaje"}
                   </button>
@@ -276,7 +288,7 @@ export default function CrearPersonaje() {
           </div>
         </div>
 
-        {/* Columna derecha: dinero + preview */}
+        {/* Columna derecha: dinero + imagen subida + preview */}
         <div className="col-12 col-md-6">
           <div className="card bg-dark text-light border-light h-100">
             <div className="card-body">
@@ -339,7 +351,9 @@ export default function CrearPersonaje() {
                 </div>
               </div>
 
-              <h5 className="card-title mb-3">Preview</h5>
+              <h5 className="card-title mb-3">Imagen del personaje</h5>
+
+              {/* Cuadro de imagen */}
               <div
                 className="mb-3 d-flex align-items-center justify-content-center"
                 style={{
@@ -350,9 +364,9 @@ export default function CrearPersonaje() {
                   overflow: "hidden",
                 }}
               >
-                {imageUrl ? (
+                {imagePreview ? (
                   <img
-                    src={imageUrl}
+                    src={imagePreview}
                     alt={name || "Personaje"}
                     className="img-fluid h-100 w-100 object-fit-cover"
                   />
@@ -361,6 +375,31 @@ export default function CrearPersonaje() {
                 )}
               </div>
 
+              {/* Botón subir imagen */}
+              <button
+                type="button"
+                className="btn btn-outline-light mb-2"
+                onClick={handleSelectImageClick}
+              >
+                Subir imagen
+              </button>
+
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={handleImageChange}
+                style={{ display: "none" }}
+              />
+
+              <p className="text-muted small">
+                La imagen es opcional. Si la subes, se guardará junto al
+                personaje.
+              </p>
+
+              <hr />
+
+              <h5 className="card-title mb-3">Preview</h5>
               <p className="mb-1">
                 <strong>{name || "Nombre del personaje"}</strong>
               </p>
@@ -373,9 +412,7 @@ export default function CrearPersonaje() {
               <p className="mb-1 small">
                 Nivel: {level || <span className="text-muted">—</span>}
               </p>
-              <p className="mb-1 small">
-                Tipo: {npc ? "NPC" : "Jugador"}
-              </p>
+              <p className="mb-1 small">Tipo: {npc ? "NPC" : "Jugador"}</p>
               {playerUsername && (
                 <p className="mb-1 small">
                   Asignado a: <strong>{playerUsername}</strong>

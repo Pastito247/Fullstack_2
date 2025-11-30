@@ -1,3 +1,4 @@
+// src/app/pages/DetallesCampana.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import apiClient from "../../api/apiClient";
@@ -14,10 +15,16 @@ export default function DetallesCampana() {
   const [info, setInfo] = useState("");
   const [deleting, setDeleting] = useState(false);
 
-  // TODO: cuando tengamos endpoints de tiendas / players / personajes, los llenamos
   const [shops, setShops] = useState([]);
   const [players, setPlayers] = useState([]);
   const [characters, setCharacters] = useState([]);
+
+  const esDM = user?.role === "DM" || user?.role === "ADMIN";
+
+  const esDuenoOCapo =
+    user &&
+    (user.role === "ADMIN" ||
+      (campaign && user.username === campaign.dmUsername));
 
   const cargarDatos = async () => {
     setLoading(true);
@@ -25,13 +32,37 @@ export default function DetallesCampana() {
     setInfo("");
 
     try {
-      // Detalle campaña
-      const res = await apiClient.get(`/api/v1/campaigns/${id}`);
-      setCampaign(res.data);
+      // 1) Datos de la campaña
+      const resCamp = await apiClient.get(`/api/v1/campaigns/${id}`);
+      setCampaign(resCamp.data);
 
-      // 🔥 Cargar personajes de esta campaña
-      const resChars = await apiClient.get(`/api/characters/campaign/${id}`);
-      setCharacters(resChars.data);
+      // 2) Tiendas de la campaña
+      const resShops = await apiClient.get(`/api/v1/campaigns/${id}/shops`);
+      setShops(resShops.data || []);
+
+      // 3) Personajes de la campaña (usa CharacterController)
+      try {
+        const resChars = await apiClient.get(`/api/characters/campaign/${id}`);
+        setCharacters(resChars.data || []);
+      } catch (err) {
+        console.error("Error cargando personajes:", err);
+        setCharacters([]);
+      }
+
+      // 4) Jugadores de la campaña (solo si eres DM/ADMIN)
+      if (esDM) {
+        try {
+          const resPlayers = await apiClient.get(
+            `/api/v1/campaigns/${id}/players`
+          );
+          setPlayers(resPlayers.data || []);
+        } catch (err) {
+          console.error("Error cargando jugadores:", err);
+          setPlayers([]);
+        }
+      } else {
+        setPlayers([]);
+      }
     } catch (err) {
       console.error(err);
       setError("No se pudo cargar la campaña.");
@@ -48,11 +79,6 @@ export default function DetallesCampana() {
   const volver = () => {
     navigate("/campanas");
   };
-
-  const esDuenoOCapo =
-    user &&
-    (user.role === "ADMIN" ||
-      (campaign && user.username === campaign.dmUsername));
 
   const handleDelete = async () => {
     if (!campaign) return;
@@ -77,6 +103,19 @@ export default function DetallesCampana() {
   const irACrearPersonaje = () => {
     if (!campaign) return;
     navigate(`/personajes/crear?campaignId=${campaign.id}`);
+  };
+
+  const irADetallePersonaje = (characterId) => {
+    navigate(`/personajes/${characterId}`);
+  };
+
+  const irACrearTienda = () => {
+    if (!campaign) return;
+    navigate(`/tiendas/crear?campaignId=${campaign.id}`);
+  };
+
+  const irATienda = (shopId) => {
+    navigate(`/tiendas/${shopId}`);
   };
 
   return (
@@ -148,8 +187,19 @@ export default function DetallesCampana() {
           {/* Columna izquierda: Tiendas */}
           <div className="col-12 col-md-4">
             <div className="card bg-dark text-light border-light h-100">
-              <div className="card-body">
-                <h5 className="card-title mb-3">Tiendas</h5>
+              <div className="card-body d-flex flex-column">
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <h5 className="card-title mb-0">Tiendas</h5>
+                  {esDuenoOCapo && (
+                    <button
+                      className="btn btn-add btn-sm"
+                      type="button"
+                      onClick={irACrearTienda}
+                    >
+                      + Crear tienda
+                    </button>
+                  )}
+                </div>
 
                 {shops.length === 0 ? (
                   <p className="text-muted small">
@@ -161,14 +211,18 @@ export default function DetallesCampana() {
                       <button
                         key={shop.id}
                         className="btn btn-outline-light text-start"
+                        onClick={() => irATienda(shop.id)}
                       >
-                        {shop.name}
+                        <strong>{shop.name}</strong>
+                        {shop.description && (
+                          <span className="d-block small text-muted">
+                            {shop.description}
+                          </span>
+                        )}
                       </button>
                     ))}
                   </div>
                 )}
-
-                {/* Más adelante: botón "Crear tienda" solo para el DM */}
               </div>
             </div>
           </div>
@@ -177,7 +231,17 @@ export default function DetallesCampana() {
           <div className="col-12 col-md-8">
             <div className="card bg-dark text-light border-light mb-3">
               <div className="card-body">
-                <h5 className="card-title mb-3">Jugadores</h5>
+                <div className="d-flex justify-content-between align-items-center mb-2">
+                  <h5 className="card-title mb-0">Jugadores</h5>
+                </div>
+
+                {/* Código de invitación */}
+                {campaign.inviteCode && (
+                  <p className="mb-3 small">
+                    Código de invitación: <code>{campaign.inviteCode}</code>
+                  </p>
+                )}
+
                 {players.length === 0 ? (
                   <p className="text-muted small">
                     Aún no hay jugadores listados para esta campaña.
@@ -205,19 +269,25 @@ export default function DetallesCampana() {
                 ) : (
                   <div className="d-flex flex-wrap gap-3">
                     {characters.map((ch) => (
-                      <div
+                      <button
                         key={ch.id}
-                        className="d-flex flex-column align-items-center"
+                        type="button"
+                        className="btn btn-outline-light p-0"
+                        style={{
+                          width: "110px",
+                          borderRadius: "4px",
+                          overflow: "hidden",
+                        }}
+                        onClick={() => irADetallePersonaje(ch.id)}
                       >
                         <div
                           style={{
-                            width: "80px",
-                            height: "110px",
-                            border: "2px solid #ffffff",
-                            borderRadius: "4px",
+                            width: "100%",
+                            height: "120px",
+                            borderBottom: "1px solid rgba(255,255,255,0.3)",
                             overflow: "hidden",
                           }}
-                          className="mb-2 d-flex align-items-center justify-content-center"
+                          className="mb-0 d-flex align-items-center justify-content-center"
                         >
                           {ch.imageUrl ? (
                             <img
@@ -229,8 +299,15 @@ export default function DetallesCampana() {
                             <span className="text-muted small">img</span>
                           )}
                         </div>
-                        <span className="small">{ch.name}</span>
-                      </div>
+                        <div className="p-1">
+                          <span className="small text-truncate d-block">
+                            {ch.name}
+                          </span>
+                          <span className="small text-muted d-block">
+                            Nv. {ch.level} · {ch.dndClass}
+                          </span>
+                        </div>
+                      </button>
                     ))}
                   </div>
                 )}

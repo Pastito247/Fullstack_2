@@ -1,9 +1,10 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+// src/app/App.jsx
+import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
 import "../styles/main.css";
-import React from "react";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -16,6 +17,9 @@ import CrearCampana from "./pages/CrearCampana";
 import DetallesCampana from "./pages/DetallesCampana";
 import MiPersonaje from "./pages/MiPersonaje";
 import CrearPersonaje from "./pages/CrearPersonaje";
+import DetallePersonaje from "./pages/DetallePersonaje";
+import TiendaDetalle from "./pages/TiendaDetalle";
+import CrearTienda from "./pages/CrearTienda";
 
 import ProtectedRoute from "../components/ProtectedRoute";
 
@@ -31,6 +35,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
+          {/* Campañas */}
           <Route
             path="/campanas"
             element={
@@ -48,14 +53,6 @@ export default function App() {
             }
           />
           <Route
-            path="/personajes"
-            element={
-              <ProtectedRoute>
-                <Personajes />
-              </ProtectedRoute>
-            }
-          />
-          <Route
             path="/campanas/:id"
             element={
               <ProtectedRoute>
@@ -63,19 +60,51 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* Personajes */}
+          {/* Listado de personajes: SOLO PLAYER puede ver esta página */}
+          <Route
+            path="/personajes"
+            element={
+              <ProtectedRoute allowedRoles={["PLAYER"]}>
+                <Personajes />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tiendas/crear"
+            element={
+              <ProtectedRoute allowedRoles={["DM", "ADMIN"]}>
+                <CrearTienda />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Detalle personaje (DM puede entrar para asignar / editar dinero, etc.) */}
+          <Route
+            path="/personajes/:id"
+            element={
+              <ProtectedRoute>
+                <DetallePersonaje />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Mi personaje (también tiene sentido dejarlo solo para PLAYER) */}
           <Route
             path="/personaje"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={["PLAYER"]}>
                 <MiPersonaje />
               </ProtectedRoute>
             }
           />
 
+          {/* Crear personaje: solo DM/ADMIN */}
           <Route
             path="/personajes/crear"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={["DM", "ADMIN"]}>
                 <CrearPersonaje />
               </ProtectedRoute>
             }
@@ -87,6 +116,16 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Tiendas */}
+          <Route
+            path="/tiendas/:id"
+            element={
+              <ProtectedRoute>
+                <TiendaDetalle />
               </ProtectedRoute>
             }
           />

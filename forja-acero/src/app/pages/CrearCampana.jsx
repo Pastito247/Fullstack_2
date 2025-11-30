@@ -12,8 +12,6 @@ export default function CrearCampana() {
   const [loading, setLoading] = useState(false);
 
   const [imagePreview, setImagePreview] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
-
   const fileInputRef = useRef(null);
 
   const volver = () => {
@@ -30,11 +28,9 @@ export default function CrearCampana() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setImageFile(file);
-
     const reader = new FileReader();
     reader.onload = (ev) => {
-      setImagePreview(ev.target.result);
+      setImagePreview(ev.target.result); // data URL base64
     };
     reader.readAsDataURL(file);
   };
@@ -52,15 +48,14 @@ export default function CrearCampana() {
     try {
       setLoading(true);
 
-      // Por ahora el backend solo recibe name y description
+      // Ahora el backend recibe name, description e imageUrl (opcional)
       await apiClient.post("/api/v1/campaigns", {
         name: nombre,
         description: descripcion,
-        // TODO: cuando el backend soporte imagen, enviar imageUrl aquí
+        imageUrl: imagePreview || null,
       });
 
       setInfo("Campaña creada correctamente.");
-      // Volver a la lista de campañas
       setTimeout(() => navigate("/campanas"), 800);
     } catch (err) {
       console.error(err);
@@ -104,9 +99,7 @@ export default function CrearCampana() {
 
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label className="form-label">
-                    *Nombre
-                  </label>
+                  <label className="form-label">*Nombre</label>
                   <input
                     type="text"
                     className="form-control"
@@ -116,9 +109,7 @@ export default function CrearCampana() {
                 </div>
 
                 <div className="mb-3">
-                  <label className="form-label">
-                    *Descripción
-                  </label>
+                  <label className="form-label">*Descripción</label>
                   <textarea
                     className="form-control"
                     rows={6}
@@ -127,7 +118,6 @@ export default function CrearCampana() {
                   />
                 </div>
 
-                {/* Botón crear en la parte de abajo (en el mock está al centro abajo, pero aquí está en la columna izquierda) */}
                 <button
                   type="submit"
                   className="btn btn-add mt-2"
@@ -186,8 +176,8 @@ export default function CrearCampana() {
               />
 
               <p className="text-muted small text-center mt-2">
-                La imagen es opcional por ahora.  
-                (Más adelante podemos guardarla en el backend como portada.)
+                La imagen es opcional. Si la subes, se guardará como portada de
+                la campaña.
               </p>
             </div>
           </div>
