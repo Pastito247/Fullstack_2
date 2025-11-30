@@ -1,44 +1,38 @@
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Navbar() {
   const [menuAbierto, setMenuAbierto] = useState(false);
-  const [usuario, setUsuario] = useState(null);
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
-  useEffect(() => {
-    const actualizarUsuario = () => {
-      const guardado = JSON.parse(localStorage.getItem("forja_acero_usuario"));
-      setUsuario(guardado);
-    };
-
-    actualizarUsuario();
-    window.addEventListener("storage", actualizarUsuario);
-    return () => window.removeEventListener("storage", actualizarUsuario);
-  }, []);
-
-  const toggleMenu = () => setMenuAbierto(!menuAbierto);
+  const toggleMenu = () => setMenuAbierto((prev) => !prev);
   const cerrarMenu = () => setMenuAbierto(false);
 
+  const handleLogout = () => {
+    logout();
+    cerrarMenu();
+    navigate("/login");
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-warning">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
       <div className="container">
-        {/* Logo + Nombre */}
+        {/* Logo / Inicio */}
         <Link
-          className="navbar-brand d-flex align-items-center gap-2"
+          className="navbar-brand d-flex align-items-center"
           to="/"
           onClick={cerrarMenu}
         >
-          <Logo size={36} />
-          <span className="fw-bold text-uppercase" style={{ color: "#c8a54e" }}>
-            Forja & Acero
-          </span>
+          <Logo />
+          <span className="ms-2 fw-bold">Forja y Acero</span>
         </Link>
 
-        {/* Botón Hamburguesa */}
+        {/* Botón hamburguesa */}
         <button
-          className="navbar-toggler border-0"
+          className="navbar-toggler"
           type="button"
           onClick={toggleMenu}
           aria-controls="navbarNav"
@@ -54,45 +48,30 @@ export default function Navbar() {
           id="navbarNav"
         >
           <ul className="navbar-nav ms-auto text-center">
-            {/* Enlaces base */}
+            {/* Inicio */}
             <li className="nav-item">
               <Link className="nav-link" to="/" onClick={cerrarMenu}>
                 Inicio
               </Link>
             </li>
 
+            {/* Campañas */}
             <li className="nav-item">
-              <Link className="nav-link" to="/catalogo" onClick={cerrarMenu}>
-                Catálogo
+              <Link className="nav-link" to="/campanas" onClick={cerrarMenu}>
+                Campañas
               </Link>
             </li>
 
-            {/* Carrito solo para compradores */}
-            {usuario?.rol === "comprador" && (
-              <li className="nav-item">
-                <Link className="nav-link" to="/carrito" onClick={cerrarMenu}>
-                  Carrito
-                </Link>
-              </li>
-            )}
-
-            {/* Panel administrador */}
-            {usuario?.rol === "admin" && (
-              <li className="nav-item">
-                <Link className="nav-link" to="/admin" onClick={cerrarMenu}>
-                  Administrador
-                </Link>
-              </li>
-            )}
-
+            {/* Personajes */}
+            {user && user.role === "PLAYER" && (
             <li className="nav-item">
-              <Link className="nav-link" to="/about" onClick={cerrarMenu}>
-                Acerca de
+              <Link className="nav-link" to="/personajes" onClick={cerrarMenu}>
+                Personajes
               </Link>
             </li>
-
-            {/* Sin sesión */}
-            {!usuario && (
+            )}
+            {/* Perfil / Auth */}
+            {!user && (
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/login" onClick={cerrarMenu}>
@@ -100,53 +79,28 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link
-                    className="nav-link"
-                    to="/register"
-                    onClick={cerrarMenu}
-                  >
+                  <Link className="nav-link" to="/register" onClick={cerrarMenu}>
                     Registrarse
                   </Link>
                 </li>
               </>
             )}
 
-            {/* Con sesión */}
-            {usuario && (
+            {user && (
               <>
-                <li className="nav-item d-flex align-items-center justify-content-center">
-                  <span
-                    className="fw-semibold text-warning px-2 bienvenida-animada"
-                    style={{
-                      textShadow: "0 0 6px rgba(200,165,78,0.6)",
-                      fontFamily: "Cinzel, serif",
-                    }}
-                  >
-                    ⚒️ Bienvenido,{" "}
-                    {usuario.nombre?.split(" ")[0] || "Aventurero"}
-                  </span>
-                </li>
-
-                {/* Solo comprador puede ver historial */}
-                  <li className="nav-item">
-                    <Link
-                      className="nav-link"
-                      to="/historial"
-                      onClick={cerrarMenu}
-                    >
-                      Historial
-                    </Link>
-                  </li>
-
-                {/* Nuevo enlace de perfil */}
                 <li className="nav-item">
-                  <Link
-                    className="nav-link"
-                    to="/perfil"
-                    onClick={cerrarMenu}
-                  >
+                  <Link className="nav-link" to="/perfil" onClick={cerrarMenu}>
                     Perfil
                   </Link>
+                </li>
+
+                <li className="nav-item">
+                  <button
+                    className="nav-link btn btn-link text-danger"
+                    onClick={handleLogout}
+                  >
+                    Cerrar sesión
+                  </button>
                 </li>
               </>
             )}

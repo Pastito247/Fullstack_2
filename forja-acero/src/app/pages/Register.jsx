@@ -1,61 +1,61 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Register() {
   const navigate = useNavigate();
+  const { register } = useAuth();
+
   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
-  const [rol, setRol] = useState("comprador");
+  const [rol, setRol] = useState("PLAYER"); // PLAYER por defecto
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const registrar = (e) => {
+  const registrar = async (e) => {
     e.preventDefault();
-
-    if (!nombre.trim() || !correo.trim() || !password.trim()) {
-      setError("Completa todos los campos.");
-      return;
-    }
-
-    const usuarios =
-      JSON.parse(localStorage.getItem("forja_acero_usuarios")) || [];
-
-    if (usuarios.some((u) => u.correo === correo)) {
-      setError("Ya existe una cuenta con este correo.");
-      return;
-    }
-
-    const nuevoUsuario = { nombre, correo, password, rol };
-
-    localStorage.setItem(
-      "forja_acero_usuarios",
-      JSON.stringify([...usuarios, nuevoUsuario])
-    );
-
-    setNombre("");
-    setCorreo("");
-    setPassword("");
     setError("");
 
-    navigate("/login");
+    if (!nombre.trim() || !correo.trim() || !password.trim()) {
+      setError("⚠️ Todos los campos son obligatorios");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      // Llamamos al backend usando AuthContext
+      const { role } = await register(nombre, correo, password, rol);
+
+      // Redirigir según rol
+      if (role === "DM" || role === "ADMIN") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("No se pudo registrar el usuario");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="container py-5 text-center">
-      <h1 className="text-warning mb-4">⚒️ Crear Cuenta</h1>
-      <p className="text-muted mb-4">Únete a la forja y comienza tu aventura.</p>
+    <div className="container py-5">
+      <h1 className="mb-4 text-center">Crear cuenta</h1>
 
-      <form
-        onSubmit={registrar}
-        className="crud-form mx-auto p-4"
-        style={{ maxWidth: "500px" }}
-      >
-        {error && <p className="text-danger mb-3">{error}</p>}
+      <form onSubmit={registrar} className="col-md-6 mx-auto card p-4">
+        {error && (
+          <div className="alert alert-danger text-center" role="alert">
+            {error}
+          </div>
+        )}
 
         <div className="mb-3">
           <label htmlFor="nombre" className="form-label">
-            Nombre
+            Nombre de usuario
           </label>
           <input
             id="nombre"
@@ -92,7 +92,7 @@ export default function Register() {
           />
         </div>
 
-        <div className="mb-4">
+        <div className="mb-3">
           <label htmlFor="rol" className="form-label">
             Rol
           </label>
@@ -102,16 +102,20 @@ export default function Register() {
             value={rol}
             onChange={(e) => setRol(e.target.value)}
           >
-            <option value="comprador">Comprador</option>
-            <option value="admin">Administrador</option>
+            <option value="PLAYER">Player</option>
+            <option value="DM">Dungeon Master</option>
           </select>
         </div>
 
-        <button type="submit" className="btn btn-add w-100">
-          Registrarse
+        <button
+          type="submit"
+          className="btn btn-add w-100"
+          disabled={loading}
+        >
+          {loading ? "Creando cuenta..." : "Registrarse"}
         </button>
 
-        <p className="mt-3 text-muted">
+        <p className="mt-3 text-muted text-center">
           ¿Ya tienes cuenta?{" "}
           <a href="/login" className="text-warning">
             Inicia sesión aquí

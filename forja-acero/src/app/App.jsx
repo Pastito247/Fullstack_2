@@ -1,27 +1,27 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+// src/app/App.jsx
+import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
 import "../styles/main.css";
+
+import Home from "./pages/Home";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
-import React from "react";
+import Campanas from "./pages/Campanas";
+import Personajes from "./pages/Personajes";
+import CrearCampana from "./pages/CrearCampana";
+import DetallesCampana from "./pages/DetallesCampana";
+import MiPersonaje from "./pages/MiPersonaje";
+import CrearPersonaje from "./pages/CrearPersonaje";
+import DetallePersonaje from "./pages/DetallePersonaje";
+import TiendaDetalle from "./pages/TiendaDetalle";
+import CrearTienda from "./pages/CrearTienda";
 
-// Páginas de tienda
-import Home from "../modules/shop/pages/Home";
-import Category from "../modules/shop/pages/Category";
-import ProductDetail from "../modules/shop/pages/ProductDetail";
-import Cart from "../modules/shop/pages/Cart";
-import Checkout from "../modules/shop/pages/Checkout";
-import Success from "../modules/shop/pages/Success";
-import Failure from "../modules/shop/pages/Failure";
-import Catalogo from "../modules/shop/pages/Catalogo";
-import Historial from "../modules/shop/pages/Historial";
-
-// Página de administrador
-import Dashboard from "../modules/admin/pages/Dashboard";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 export default function App() {
   return (
@@ -29,21 +29,109 @@ export default function App() {
       <Navbar />
       <main className="flex-grow-1">
         <Routes>
+          {/* Públicas */}
           <Route path="/" element={<Home />} />
-          <Route path="/categoria/:id" element={<Category />} />
-          <Route path="/producto/:id" element={<ProductDetail />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/carrito" element={<Cart />} />
           <Route path="/about" element={<About />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/success" element={<Success />} />
-          <Route path="/failure" element={<Failure />} />
-          <Route path="/perfil" element={<Profile />} />
-          <Route path="/catalogo" element={<Catalogo />} />
-          <Route path="/admin" element={<Dashboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          {/* Campañas */}
+          <Route
+            path="/campanas"
+            element={
+              <ProtectedRoute>
+                <Campanas />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/campanas/crear"
+            element={
+              <ProtectedRoute allowedRoles={["DM", "ADMIN"]}>
+                <CrearCampana />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/campanas/:id"
+            element={
+              <ProtectedRoute>
+                <DetallesCampana />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Personajes */}
+          {/* Listado de personajes: SOLO PLAYER puede ver esta página */}
+          <Route
+            path="/personajes"
+            element={
+              <ProtectedRoute allowedRoles={["PLAYER"]}>
+                <Personajes />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tiendas/crear"
+            element={
+              <ProtectedRoute allowedRoles={["DM", "ADMIN"]}>
+                <CrearTienda />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Detalle personaje (DM puede entrar para asignar / editar dinero, etc.) */}
+          <Route
+            path="/personajes/:id"
+            element={
+              <ProtectedRoute>
+                <DetallePersonaje />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Mi personaje (también tiene sentido dejarlo solo para PLAYER) */}
+          <Route
+            path="/personaje"
+            element={
+              <ProtectedRoute allowedRoles={["PLAYER"]}>
+                <MiPersonaje />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Crear personaje: solo DM/ADMIN */}
+          <Route
+            path="/personajes/crear"
+            element={
+              <ProtectedRoute allowedRoles={["DM", "ADMIN"]}>
+                <CrearPersonaje />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Perfil solo logueado */}
+          <Route
+            path="/perfil"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Tiendas */}
+          <Route
+            path="/tiendas/:id"
+            element={
+              <ProtectedRoute>
+                <TiendaDetalle />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Cualquier ruta desconocida → Home */}
           <Route path="*" element={<Navigate to="/" />} />
-          <Route path="/historial" element={<Historial />} />
         </Routes>
       </main>
       <Footer />
